@@ -1,0 +1,95 @@
+name: syncelease
+
+on:
+  #push:
+  workflow_dispatch:
+
+jobs:
+  upload-assets:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 步骤1：强制更新 inital tag 到最新 commit
+      - name: Force update 'inital' tag to current commit
+        uses: actions/github-script@v7
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_FINEGRADED_PAT }}
+        with:
+          script: |
+            const repo = await github.rest.repos.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            });
+            console.log("仓库信息：", repo.data);
+
+            const tag = 'inital';
+            const sha = process.env.GITHUB_SHA;
+            // 检查 tag 是否存在
+            try {
+              await github.rest.git.getRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: `tags/${tag}`
+              });
+              // 存在则强制更新
+              await github.rest.git.updateRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: `tags/${tag}`,
+                sha: sha,
+                force: true
+              });
+            } catch (e) {
+              // 不存在则创建
+              await github.rest.git.createRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: `refs/tags/${tag}`,
+                sha: sha
+              });
+            }
+
+      # 步骤2：查找并删除 inital release 的所有旧 asset
+      - name: Delete all assets from inital release
+        uses: actions/github-script@v7
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_FINEGRADED_PAT }}
+        with:
+          script: |
+            // 获取 inital release
+            const releases = await github.rest.repos.listReleases({
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            });
+            const release = releases.data.find(r => r.tag_name === 'inital');
+            if (!release) {
+              console.log('Release not found');
+              return;
+            }
+            const release_id = release.id;
+            // 获取并删除所有 asset
+            const assets = await github.rest.repos.listReleaseAssets({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id
+            });
+            for (const asset of assets.data) {
+              await github.rest.repos.deleteReleaseAsset({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                asset_id: asset.id
+              });
+              console.log(`Deleted asset: ${asset.name}`);
+            }
+
+      # 步骤3：上传新文件（同名会覆盖，已经没有旧文件了）
+      - name: Upload all files in yourfolder to release 'inital'
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_FINEGRADED_PAT }}
+        with:
+          files: apps/*
+          tag_name: inital
+          name: inital
