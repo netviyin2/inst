@@ -479,7 +479,7 @@ efi_file_path2="EFI\\boot\\bootaa64.efi"
 
 found1=0
 for path in $efi_file_path1; do
-  real_path="$efi_mount/${path//\\//}"
+  real_path="$efi_mount/$(echo "$path" | sed 's|\\|/|g')"
   if [ -f "$real_path" ]; then
     if ! efibootmgr -v | grep -q -i "HD($efi_part_num,GPT,$efi_part_uuid,.*)/File(\\\\$path)"; then
       efibootmgr --create --disk "$hdinfo" --part "$efi_part_num" --label "$path" --loader "\\$path"
@@ -495,7 +495,7 @@ for path in $efi_file_path1; do
 done
 
 if [ $found1 -eq 0 ]; then
-  real_path2="$efi_mount/${efi_file_path2//\\//}"
+  real_path2="$efi_mount/$(echo "$efi_file_path2" | sed 's|\\|/|g')"
   if [ -f "$real_path2" ]; then
     if ! efibootmgr -v | grep -q -i "HD($efi_part_num,GPT,$efi_part_uuid,.*)/File(\\\\$efi_file_path2)"; then
       efibootmgr --create --disk "$hdinfo" --part "$efi_part_num" --label "$efi_file_path2" --loader "\\$efi_file_path2"
