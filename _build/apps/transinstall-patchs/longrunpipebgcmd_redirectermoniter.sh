@@ -54,8 +54,6 @@ GATE=`[ -n "$staticnetinfo" ] && echo "$staticnetinfo" | awk -F ',' '{ print $3}
 IPTYPE=`[ -n "$IP" ] && [ \`echo "$IP"|grep ":"\` ] && echo v6 || echo v4`
 logger -t minlearnadd preddtime IP:$IP,MASK:$MASK,GATE:$GATE,IPTYPE:$IPTYPE,ISDHCP:$ISDHCP
 
-PIPECMDSTR='wget -qO- --no-check-certificate '\"$TARGETDDURL\"' | stdbuf -oL dd of=p4/down/tmp.iso bs=10M 2>> /var/log/progress & pid=`expr $! + 0`;echo $pid'
-logger -t minlearnadd preddtime PIPECMDSTR:"$PIPECMDSTR"
 
 down(){
 
@@ -66,6 +64,9 @@ down(){
   apt-get update
   install_packages curl efibootmgr p7zip-full squashfs-tools
   echo "Installed Dependencies"
+}
+
+dowget(){
 
   # grub-pc and grub-efi-amd64 cant be apt-get install together
   mkdir -p p4/down p4/extracted
@@ -73,9 +74,12 @@ down(){
     wget -q --no-check-certificate "$RLSMIRROR/$i" -O p4/down/$i
   done
 
+  wget -qO- --no-check-certificate "$TARGETDDURL" | stdbuf -oL dd of=p4/down/tmp.iso bs=10M 2>> /var/log/progress & pid=`expr $! + 0`;echo $pid
+
 }
 
 dotrans(){
+
 
   7z x p4/down/tmp.iso -op4/extracted
 
@@ -518,7 +522,7 @@ fi
 
               ( umount /fwmnt )
 }
-for step in parted down wget grub; do
+for step in down parted wgetrans grub; do
 
     if ! db_progress INFO my_script/progress/$step; then
             db_subst my_script/progress/fallback STEP "$step"
@@ -526,6 +530,11 @@ for step in parted down wget grub; do
     fi
 
     case $step in
+       "down")
+           db_progress INFO my_script/progress/down
+           down
+           sleep 3
+           ;; 
        # in debian installer frontend cmd you should force -t ext4 or it cant be mounted
        # dedicated server need ext2 as boot and efi fstype,or it wont boot,so we use ext2 instead of fat32/vfat
        "parted")
@@ -554,17 +563,12 @@ for step in parted down wget grub; do
            mkswap $hdinfoname"5" -L "SWAP"
 
            ;;
-       "down")
-           db_progress INFO my_script/progress/down
-           down
-           sleep 3
-           ;; 
-       "wget")
-           db_progress START 0 100 my_script/progress/wget
-           db_progress INFO my_script/progress/wget
+       "wgetrans")
+           db_progress START 0 100 my_script/progress/wgetrans
+           db_progress INFO my_script/progress/wgetrans
 
            db_progress SET 0
-           pidinfo=`eval $PIPECMDSTR`
+           pidinfo=$(dowget)
            while :; do 
            {
                # very little time, just sleep 3
@@ -572,7 +576,7 @@ for step in parted down wget grub; do
 
                # replaced with grep --line-buffer?
                statusinfo=`kill -USR1 $pidinfo;cat /var/log/progress|sed '/^$/!h;$!d;g'`
-               db_subst my_script/progress/wget STATUS "${statusinfo}"
+               db_subst my_script/progress/wgetrans STATUS "${statusinfo}"
                db_progress STEP 1
 
            }
@@ -585,7 +589,7 @@ for step in parted down wget grub; do
                sleep 30
 
                # db_subst need step 1 to show or it wont take effect
-               db_subst my_script/progress/wget STATUS "busy doing misc ......"
+               db_subst my_script/progress/wgetrans STATUS "busy doing misc ......"
                db_progress STEP 1
                # end db_subst and step
            done

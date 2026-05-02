@@ -65,15 +65,15 @@ down(){
   apt-get update
   install_packages curl efibootmgr debootstrap
   echo "Installed Dependencies"
+}
+
+dobootstrap(){
 
   # grub-pc and grub-efi-amd64 cant be apt-get install together
   mkdir -p p4/down;
   for i in grub-common_2.06-3-deb11u5_amd64.deb grub-pc-bin_2.06-3-deb11u5_amd64.deb grub-efi-amd64-bin_2.06-3-deb11u5_amd64.deb; do
     wget -q --no-check-certificate "$RLSMIRROR/$i" -O p4/down/$i
   done
-}
-
-dobootstrap(){
 
   mkdir -p p4/boot
   ar -p p4/down/grub-pc-bin_2.06-3-deb11u5_amd64.deb data.tar.xz |xzcat|tar -xf - -C p4/boot ./usr/lib/grub/ --strip-components=3
@@ -401,7 +401,7 @@ fi
 
               ( umount /fwmnt )
 }
-for step in parted down debootstrap grub; do
+for step in down parted debootstrap grub; do
 
     if ! db_progress INFO my_script/progress/$step; then
             db_subst my_script/progress/fallback STEP "$step"
@@ -409,6 +409,11 @@ for step in parted down debootstrap grub; do
     fi
 
     case $step in         
+       "down")
+           db_progress INFO my_script/progress/down
+           down
+           sleep 3
+           ;;  
        # in debian installer frontend cmd you should force -t ext4 or it cant be mounted
        # dedicated server need ext2 as boot and efi fstype,or it wont boot,so we use ext2 instead of fat32/vfat
        "parted")
@@ -441,11 +446,6 @@ for step in parted down debootstrap grub; do
            mkswap $hdinfoname"5" -L "SWAP"
 
            ;;
-       "down")
-           db_progress INFO my_script/progress/down
-           down
-           sleep 3
-           ;;  
        "debootstrap")
            db_progress START 0 100 my_script/progress/debootstrap
            db_progress INFO my_script/progress/debootstrap
