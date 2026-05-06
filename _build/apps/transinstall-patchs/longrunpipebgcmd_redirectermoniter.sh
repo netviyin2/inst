@@ -125,14 +125,14 @@ dotrans(){
     # add attend xml
     cp p4/down/win10x64-ltsc.xml p4/tmpinstall/10.xml
     [ $targetoslayoutinfo = 'bioswin' ] && {
-    sed -i 's/<PartitionID>x</PartitionID>/<PartitionID>3</PartitionID>/g' p4/tmpinstall/10.xml
+    sed -i 's|<PartitionID>x</PartitionID>|<PartitionID>3</PartitionID>|g' p4/tmpinstall/10.xml
     }
     [ $targetoslayoutinfo = 'efiwin' ] && {
-    sed -i 's/<PartitionID>x</PartitionID>/<PartitionID>4</PartitionID>/g' p4/tmpinstall/10.xml
+    sed -i 's|<PartitionID>x</PartitionID>|<PartitionID>4</PartitionID>|g' p4/tmpinstall/10.xml
     }
     # updateXML 10.xml en-us
-    # wimlib-imagex update p4/extracted/sources/boot.wim 2 --command "add p4/tmpinstall/10.xml /autounattend.xml"
-    # wimlib-imagex update p4/extracted/sources/boot.wim 2 --command "add p4/tmpinstall/10.xml /autounattend.dat"
+    wimlib-imagex update p4/extracted/sources/boot.wim 2 --command "add p4/tmpinstall/10.xml /autounattend.xml"
+    wimlib-imagex update p4/extracted/sources/boot.wim 2 --command "add p4/tmpinstall/10.xml /autounattend.dat"
     # updateimage end
 
 
@@ -709,7 +709,8 @@ for step in down parted wgetrans grub; do
            bootfsuuid=`blkid -s UUID -o value "$hdinfoname"1`
            uefifsuuid=`blkid -s UUID -o value "$hdinfoname"2`
            rootfsuuid=`blkid -s UUID -o value "$hdinfoname"4`
-           sed -e s/gptBOOTPARTNO/msdos1/g -e s/BOOTFSUUID/$bootfsuuid/g -e s/ROOTFSUUID/$rootfsuuid/g -i p2/grub/grub.cfg
+           sed -e s/gptBOOTPARTNO/msdos4/g -e s/BOOTFSUUID/$rootfsuuid/g -e s/ROOTFSUUID/$rootfsuuid/g -i p2/grub/grub.cfg
+           sed -e 's|^[[:space:]]*linux[[:space:]]*/vmlinuz.*$|\tntldr /bootmgr|g' -e 's|^[[:space:]]*initrd[[:space:]]*/initrfs.img.*$|\tboot|g' -i p2/grub/grub.cfg
            }
            [ $targetoslayoutinfo = 'efiwin' ] && {
            p2/grub/grub-mkimage -C xz -O i386-pc -o p2/grub/i386-pc/core.img -p "(hd0,gpt2)/grub" -d p2/grub/i386-pc biosdisk part_msdos part_gpt exfat ext2 fat iso9660 btrfs lvm dm_nv mdraid09_be mdraid09 mdraid1x raid5rec raid6rec
@@ -718,7 +719,8 @@ for step in down parted wgetrans grub; do
            bootfsuuid=`blkid -s UUID -o value "$hdinfoname"2`
            uefifsuuid=`blkid -s UUID -o value "$hdinfoname"3`
            rootfsuuid=`blkid -s UUID -o value "$hdinfoname"5`
-           sed -e s/gptBOOTPARTNO/gpt2/g -e s/BOOTFSUUID/$bootfsuuid/g -e s/ROOTFSUUID/$rootfsuuid/g -i p2/grub/grub.cfg
+           sed -e s/gptBOOTPARTNO/gpt5/g -e s/BOOTFSUUID/$rootfsuuid/g -e s/ROOTFSUUID/$rootfsuuid/g -i p2/grub/grub.cfg
+           sed -e 's|^[[:space:]]*linux[[:space:]]*/vmlinuz.*$|\tchainloader /efi/boot/bootx64.efi|g' -e 's|^[[:space:]]*initrd[[:space:]]*/initrfs.img.*$|\tboot|g' -i p2/grub/grub.cfg
            }
            [ $targetoslayoutinfo = 'genelinux' ] && {
            p2/grub/grub-mkimage -C xz -O i386-pc -o p2/grub/i386-pc/core.img -p "(hd0,gpt2)/grub" -d p2/grub/i386-pc biosdisk part_msdos part_gpt exfat ext2 fat iso9660 btrfs lvm dm_nv mdraid09_be mdraid09 mdraid1x raid5rec raid6rec
