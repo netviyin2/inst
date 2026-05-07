@@ -10,6 +10,7 @@ TARGETDDURL=`echo "$corefiles" | awk -F ',' '{ print $3}'`
 OSHINT=`echo "$corefiles" | awk -F ',' '{ print $4}'`
 UNZIP=`echo "$corefiles" | awk -F ',' '{ print $5}'`
 targetoslayoutinfo=`[ ! -d /sys/firmware/efi ] && echo "$OSHINT" | grep -q '^win*' && echo bioswin || { echo "$OSHINT" | grep -q '^win*' && echo efiwin || echo genelinux; }` # general biosorefilinux
+targetoshintwinverinfo=`echo "$OSHINT" | grep -q '^win*' && echo "$OSHINT" | sed -e 's/^win2k/2k/' -e 's/^win/w/'`
 
 hd=$2
 # exit 0 is important when there is more than 1 block,it may failed
@@ -72,7 +73,7 @@ dowget(){
 
   # grub-pc and grub-efi-amd64 cant be apt-get install together
   mkdir -p p4/down p4/extracted
-  for i in grub-common_2.06-3-deb11u5_amd64.deb grub-pc-bin_2.06-3-deb11u5_amd64.deb grub-efi-amd64-bin_2.06-3-deb11u5_amd64.deb virtio-win-1.9.45.tar.xz win10x64-ltsc.xml; do 
+  for i in grub-common_2.06-3-deb11u5_amd64.deb grub-pc-bin_2.06-3-deb11u5_amd64.deb grub-efi-amd64-bin_2.06-3-deb11u5_amd64.deb virtio-win-1.9.57.tar.xz ${OSHINT}_amd64.xml; do 
     wget -q --no-check-certificate "$RLSMIRROR/$i" -O p4/down/$i
   done
 
@@ -84,6 +85,7 @@ dotrans(){
 
 
   7z x p4/down/tmp.iso -op4/extracted
+  rm -rf p4/down/tmp.iso
 
   isotype=`ls -1 p4/extracted 2>/dev/null | awk 'BEGIN{setup=0;bootmgr=0} $0~/^[^/]+$/{if(tolower($0)=="setup.exe")setup=1;if(tolower($0)=="bootmgr")bootmgr=1} END{if(setup&&bootmgr)print "windows";else print "linux"}'`
 
@@ -103,12 +105,12 @@ dotrans(){
     # addDrivers p4/extracted/sources tmpinstall p4/extracted/sources/boot.wim 2 "$DETECTED"
     mkdir -p p4/tmpinstall/drivers
     target="\$WinPEDriver\$"
-    cat p4/down/virtio-win-1.9.45.tar.xz|xzcat|tar -xf - -C p4/tmpinstall/drivers
+    cat p4/down/virtio-win-1.9.57.tar.xz|xzcat|tar -xf - -C p4/tmpinstall/drivers
     mkdir -p p4/tmpinstall/drivers/$target
     # addDriver win10x64 "p4/tmpinstall/drivers" "\$WinPEDriver\$" "qxl"
     for driver in viofs sriov qxldod viorng viostor viomem NetKVM Balloon vioscsi pvpanic vioinput viogpudo vioserial qemupciserial; do
         mkdir -p p4/tmpinstall/drivers/$target/$driver
-        cp -Lr p4/tmpinstall/drivers/$driver/w10/amd64/. p4/tmpinstall/drivers/$target/$driver
+        cp -Lr p4/tmpinstall/drivers/$driver/$targetoshintwinverinfo/amd64/. p4/tmpinstall/drivers/$target/$driver
     done
     wimlib-imagex update p4/extracted/sources/boot.wim 2 --command "delete --force --recursive /$target"
     wimlib-imagex update p4/extracted/sources/boot.wim 2 --command "add p4/tmpinstall/drivers/$target /$target"
@@ -123,16 +125,16 @@ dotrans(){
     }
 
     # add attend xml
-    cp p4/down/win10x64-ltsc.xml p4/tmpinstall/10.xml
+    cp p4/down/${OSHINT}_amd64.xml p4/tmpinstall/tempauto.xml
     [ $targetoslayoutinfo = 'bioswin' ] && {
-    sed -i 's|<PartitionID>x</PartitionID>|<PartitionID>3</PartitionID>|g' p4/tmpinstall/10.xml
+    sed -i 's|<PartitionID>x</PartitionID>|<PartitionID>3</PartitionID>|g' p4/tmpinstall/tempauto.xml
     }
     [ $targetoslayoutinfo = 'efiwin' ] && {
-    sed -i 's|<PartitionID>x</PartitionID>|<PartitionID>4</PartitionID>|g' p4/tmpinstall/10.xml
+    sed -i 's|<PartitionID>x</PartitionID>|<PartitionID>4</PartitionID>|g' p4/tmpinstall/tempauto.xml
     }
     # updateXML 10.xml en-us
-    wimlib-imagex update p4/extracted/sources/boot.wim 2 --command "add p4/tmpinstall/10.xml /autounattend.xml"
-    wimlib-imagex update p4/extracted/sources/boot.wim 2 --command "add p4/tmpinstall/10.xml /autounattend.dat"
+    wimlib-imagex update p4/extracted/sources/boot.wim 2 --command "add p4/tmpinstall/tempauto.xml /autounattend.xml"
+    wimlib-imagex update p4/extracted/sources/boot.wim 2 --command "add p4/tmpinstall/tempauto.xml /autounattend.dat"
     # updateimage end
 
 
@@ -612,8 +614,8 @@ for step in down parted wgetrans grub; do
            parted -s $hdinfo \
              mkpart primary ext2 2048s `echo $(expr 2048 + 2048 \* 200 - 1)s` \
              mkpart primary fat16 `echo $(expr 2048 + 2048 \* 200)s` `echo $(expr 2048 + 2048 \* 400 - 1)s` \
-             mkpart primary ntfs `echo $(expr 2048 + 2048 \* 400)s` `echo $(expr $total_s - 15 \* 2048 \* 1024 - 1)s` \
-             mkpart primary ntfs `echo $(expr $total_s - 15 \* 2048 \* 1024)s` 100%
+             mkpart primary ntfs `echo $(expr 2048 + 2048 \* 400)s` `echo $(expr $total_s - 10 \* 2048 \* 1024 - 1)s` \
+             mkpart primary ntfs `echo $(expr $total_s - 10 \* 2048 \* 1024)s` 100%
            # on mbr, there is nor msftdata flag nor any typeflag at all except esp
            parted -s $hdinfo set 1 boot on set 2 esp on
            # force fdisk w to noity the kernel (cause problems?), sometimes parted failed on this thus cause not found /dev/sda4 likehood error, we must use fdisk force noity the kernel when after reinit the disk
@@ -630,8 +632,8 @@ for step in down parted wgetrans grub; do
              mkpart non-fs 2048s `echo $(expr 2048 \* 2 - 1)s` \
              mkpart rom `echo $(expr 2048 \* 2)s` `echo $(expr 2048 \* 2 + 2048 \* 200 - 1)s` \
              mkpart rom2 `echo $(expr 2048 \* 2 + 2048 \* 200)s` `echo $(expr 2048 \* 2 + 2048 \* 400 - 1)s` \
-             mkpart sys `echo $(expr 2048 \* 2 + 2048 \* 400)s` `echo $(expr $total_s - 15 \* 2048 \* 1024 - 1)s` \
-             mkpart sys2 `echo $(expr $total_s - 15 \* 2048 \* 1024)s` 100%
+             mkpart sys `echo $(expr 2048 \* 2 + 2048 \* 400)s` `echo $(expr $total_s - 10 \* 2048 \* 1024 - 1)s` \
+             mkpart sys2 `echo $(expr $total_s - 10 \* 2048 \* 1024)s` 100%
            # on gpt, set boot and set efi duplicates and conflicts with eachother and will cause setup.exe issue
            parted -s $hdinfo set 1 bios_grub on set 1 hidden on set 2 boot off set 3 esp on set 4 msftdata on set 5 msftdata on
            # force fdisk w to noity the kernel (cause problems?), sometimes parted failed on this thus cause not found /dev/sda4 likehood error, we must use fdisk force noity the kernel when after reinit the disk

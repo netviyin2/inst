@@ -63,7 +63,7 @@ wget -qO- inst.sh|bash -s - -选项名 选项值           -t 目标值
                             * 以上都可选(-o可多组合)   * -t必须指定，且值唯一
 ```
 
-> 恢复完成后的系统，```一般地，使用自带密码的dd包安装的linux/windows会保留原包密码, 不是通过带密码dd包安装后的linux(比如iso安装或源安装的)其root密码都是inst.sh，iso包安装的桌面linu会多增加一个用户名为user密码为inst.sh的用户```，也可指定密码安装，指定密码的时候：注意windows指定时密码小于6位或8位可能不符合要求会导致密码无效   
+> 恢复完成后的系统，```一般地，使用自带密码的dd包安装的linux/windows会保留原包密码, 不是通过带密码dd包安装后的linux/windows(比如iso安装或源安装的)其root/administrator密码都是inst.sh，iso包安装的桌面linu会多增加一个用户名为user密码为inst.sh的用户```，也可指定密码安装，指定密码的时候：注意windows指定时密码小于6位或8位可能不符合要求会导致密码无效   
 
 这里收集了一些第三方dd镜像速查（不做说明的情况下， inst.sh不托管第三方gz镜像）：  
 
@@ -75,15 +75,11 @@ wget -qO- inst.sh|bash -s - -选项名 选项值           -t 目标值
 | debian12         | wikihost     | 2-4G     | amd64 | BIOS        | inst.sh       | [debian12.qcow2](https://down.idc.wiki/Image/realServer-Template/current/qcow2/debian12.qcow2) |
 | debian12 live    | debian       | 2-4G     | amd64 | BIOS+UEFI   | inst.sh       | [debian-live-12-gnome.iso](http://cdimage.debian.org/cdimage/archive/12.11.0-live/amd64/iso-hybrid/debian-live-12.11.0-amd64-gnome.iso) |
 | ubuntu24 live    | ubuntu       | 4-6G     | amd64 | BIOS+UEFI   | inst.sh       | [ubuntu-24.04-desktop.iso](https://releases.ubuntu.com/24.04.2/ubuntu-24.04.2-desktop-amd64.iso) |
-| win10            | teddysun     | 16.0GB   | amd64 | BIOS        | Teddysun.com  | [zh-cn_windows10_ltsc.xz](https://dl.lamp.sh/vhd/zh-cn_windows10_ltsc.xz) |
-| win10            | teddysun     | 16.0GB   | amd64 | UEFI        | Teddysun.com  | [zh-cn_win10_ltsc_uefi.xz](https://dl.lamp.sh/vhd/zh-cn_win10_ltsc_uefi.xz) |
-| win11            | teddysun     | 16.0GB   | amd64 | BIOS        | Teddysun.com  | [zh-cn_windows11_22h2.xz](https://dl.lamp.sh/vhd/zh-cn_windows11_22h2.xz) |
-| win11            | teddysun     | 16.0GB   | amd64 | UEFI        | Teddysun.com  | [zh-cn_windows11_22h2_uefi.xz](https://dl.lamp.sh/vhd/zh-cn_windows11_22h2_uefi.xz) |
+| win10 ltsc         | microsoft    | 16.0GB   | amd64 | BIOS+UEF  | inst.sh       | [zh-cn_windows_10_ltsc.iso](https://download.testip.xyz/Windows/zh-cn_windows_10_enterprise_ltsc_2021_x64_dvd_033b7312.iso) |
+| win11 ltsc         | microsoft    | 16.0GB   | amd64 | BIOS+UEF  | inst.sh       | [zh-cn_windows_11_ltsc.iso](https://download.testip.xyz/Windows/zh-cn_windows_11_enterprise_ltsc_2024_x64_dvd_cff9cd2d.iso) |
 | win11            | bin456789    | 10.0GB   | arm64 | UEFI        | 123@@@        | [en-us_windows11_ltsc_arm64.xz](https://r2.hotdog.eu.org/en-us_windows_11_enterprise_ltsc_2024_arm64_10g_123%40%40%40.xz) |
-| winserver 2019   | teddysun     | 16.0GB   | amd64 | BIOS        | Teddysun.com  | [cn_win2019.xz](https://dl.lamp.sh/vhd/cn_win2019.xz) |
-| winserver 2019   | teddysun     | 16.0GB   | amd64 | UEFI        | Teddysun.com  | [cn_win2019_uefi.xz](https://dl.lamp.sh/vhd/cn_win2019_uefi.xz) |
-| winserver 2022   | teddysun     | 16.0GB   | amd64 | BIOS        | Teddysun.com  | [zh-cn_win2022.xz](https://dl.lamp.sh/vhd/zh-cn_win2022.xz) |
-| winserver 2022   | teddysun     | 16.0GB   | amd64 | UEFI        | Teddysun.com  | [zh-cn_win2022_uefi.xz](https://dl.lamp.sh/vhd/zh-cn_win2022_uefi.xz) |
+| winserver 2022   | microsoft    | 16.0GB   | amd64 | BIOS+UEF    | inst.sh       | [zh-cn_windows_server_2022.iso](https://download.testip.xyz/Windows/zh-cn_windows_server_2022_updated_july_2025_x64_dvd_f3e39b78.iso) |
+| winserver 2025   | microsoft    | 16.0GB   | amd64 | BIOS+UEF    | inst.sh       | [zh-cn_windows_server_2025.iso](https://download.testip.xyz/Windows/zh-cn_windows_server_2025_updated_july_2025_x64_dvd_a1f0681d.iso) |
   
 这里收集了一些linux app速查：  
 

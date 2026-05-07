@@ -122,6 +122,7 @@ systemctl daemon-reload
 systemctl restart mysqlproxy
 
 # Wait for Mysql to become available.
+sleep 10
 until nc -z -v -w30 \${HOSTNAME} 3306 && nc -z -v -w30 localhost 3307; do
   echo "Database @\${HOSTNAME} not yet available or you dont have access to remote 3306 or local 3307. Sleeping..."
   sleep 10
