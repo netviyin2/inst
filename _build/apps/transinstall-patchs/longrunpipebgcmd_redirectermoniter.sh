@@ -11,6 +11,8 @@ OSHINT=`echo "$corefiles" | awk -F ',' '{ print $4}'`
 UNZIP=`echo "$corefiles" | awk -F ',' '{ print $5}'`
 targetoslayoutinfo=`[ ! -d /sys/firmware/efi ] && echo "$OSHINT" | grep -q '^win*' && echo bioswin || { echo "$OSHINT" | grep -q '^win*' && echo efiwin || echo genelinux; }` # general biosorefilinux
 targetoshintwinverinfo=`echo "$OSHINT" | grep -q '^win*' && echo "$OSHINT" | sed -e 's/^win2k/2k/' -e 's/^win/w/'`
+targetoshintwinimginfo=`echo "$OSHINT" | grep -q '^win*' && case "$OSHINT" in win2k8r2|win2k8R2) echo "Windows Server 2008 R2 SERVERDATACENTER";; win2k12r2|win2k12R2) echo "Windows Server 2012 R2 SERVERDATACENTER";; win2k16) echo "Windows Server 2016 SERVERDATACENTER";; win2k19) echo "Windows Server 2019 SERVERDATACENTER";; win2k22) echo "Windows Server 2022 SERVERDATACENTER";; win2k25) echo "Windows Server 2025 SERVERDATACENTER";; win11) echo "Windows 11 Enterprise LTSC 2024";; win10) echo "Windows 10 Enterprise LTSC 2021";; *) echo "Unknown OSHINT: $OSHINT" >&2; exit 1;; esac`
+logger -t minlearnadd preddtime targetoslayoutinfo:$targetoslayoutinfo,targetoshintwinverinfo:$targetoshintwinverinfo,targetoshintwinimginfo:$targetoshintwinimginfo
 
 hd=$2
 # exit 0 is important when there is more than 1 block,it may failed
@@ -73,7 +75,7 @@ dowget(){
 
   # grub-pc and grub-efi-amd64 cant be apt-get install together
   mkdir -p p4/down p4/extracted
-  for i in grub-common_2.06-3-deb11u5_amd64.deb grub-pc-bin_2.06-3-deb11u5_amd64.deb grub-efi-amd64-bin_2.06-3-deb11u5_amd64.deb virtio-win-1.9.57.tar.xz ${OSHINT}_amd64.xml; do 
+  for i in grub-common_2.06-3-deb11u5_amd64.deb grub-pc-bin_2.06-3-deb11u5_amd64.deb grub-efi-amd64-bin_2.06-3-deb11u5_amd64.deb virtio-win-1.9.57.tar.xz; do 
     wget -q --no-check-certificate "$RLSMIRROR/$i" -O p4/down/$i
   done
 
@@ -125,7 +127,96 @@ dotrans(){
     }
 
     # add attend xml
-    cp p4/down/${OSHINT}_amd64.xml p4/tmpinstall/tempauto.xml
+    cat > p4/tmpinstall/tempauto.xml <<'EOF'
+<?xml version="1.0" encoding="utf-8"?>
+<unattend xmlns="urn:schemas-microsoft-com:unattend">
+
+    <settings pass="windowsPE">
+        <component name="Microsoft-Windows-Setup" processorArchitecture="xxx" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <EnableFirewall>false</EnableFirewall>
+            <UserData>
+                <AcceptEula>true</AcceptEula>
+                <ProductKey>
+                    <Key>yyyyyy</Key>
+                </ProductKey>
+            </UserData>
+            <ImageInstall>
+                <OSImage>
+                    <InstallFrom>
+                        <MetaData wcm:action="add">
+                            <Key>/IMAGE/NAME</Key>
+                            <Value>xxxxxx</Value>
+                        </MetaData>
+                    </InstallFrom>
+                    <InstallTo>
+                        <DiskID>0</DiskID>
+                        <PartitionID>x</PartitionID>
+                    </InstallTo>
+                </OSImage>
+            </ImageInstall>
+        </component>
+        <component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="xxx" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <InputLocale>zh-CN</InputLocale>
+            <SystemLocale>zh-CN</SystemLocale>
+            <UILanguage>zh-CN</UILanguage>
+            <UserLocale>zh-CN</UserLocale>
+        </component>
+    </settings>
+
+    <settings pass="specialize">
+        <component name="Microsoft-Windows-Deployment" processorArchitecture="xxx" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <RunSynchronous>
+                <RunSynchronousCommand wcm:action="add">
+                    <Order>1</Order>
+                    <Path>net user Administrator /active:yes</Path>
+                </RunSynchronousCommand>
+            </RunSynchronous>
+        </component>
+        <component name="Microsoft-Windows-TerminalServices-LocalSessionManager" processorArchitecture="xxx" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <fDenyTSConnections>false</fDenyTSConnections>
+        </component>
+        <component name="Microsoft-Windows-TerminalServices-RDP-WinStationExtensions" processorArchitecture="xxx" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <UserAuthentication>0</UserAuthentication>
+        </component>
+        <component name="Networking-MPSSVC-Svc" processorArchitecture="xxx" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <FirewallGroups>
+                <FirewallGroup wcm:action="add" wcm:keyValue="RemoteDesktop">
+                    <Active>true</Active>
+                    <Profile>all</Profile>
+                    <Group>@FirewallAPI.dll,-28752</Group>
+                </FirewallGroup>
+            </FirewallGroups>
+        </component>
+    </settings>
+
+    <settings pass="oobeSystem">
+        <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="xxx" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <UserAccounts>
+                <AdministratorPassword>
+                    <Value>inst.sh</Value>
+                    <PlainText>true</PlainText>
+                </AdministratorPassword>
+            </UserAccounts>
+            <OOBE>
+                <HideEULAPage>true</HideEULAPage>
+                <SkipMachineOOBE>true</SkipMachineOOBE>
+                <SkipUserOOBE>true</SkipUserOOBE>
+            </OOBE>
+            <FirstLogonCommands>
+                <SynchronousCommand wcm:action="add">
+                    <Order>1</Order>
+                    <CommandLine>cmd /C if exist "C:\OEM\install.bat" start "Install" "cmd /C C:\OEM\install.bat"</CommandLine>
+                    <Description>Execute custom script from the OEM folder if exists</Description>
+                </SynchronousCommand>
+            </FirstLogonCommands>
+        </component>
+    </settings>
+
+</unattend>
+EOF
+    sed -i 's|processorArchitecture="xxx"|processorArchitecture="amd64"|g' p4/tmpinstall/tempauto.xml
+    sed -i "s|<Value>xxxxxx</Value>|<Value>$targetoshintwinimginfo</Value>|g" p4/tmpinstall/tempauto.xml
+    if [ -f "p4/extracted/sources/sources/ei.cfg" ]; then sed -i '|<Key>yyyyyy</Key>|d' p4/tmpinstall/tempauto.xml; else sed -i 's|<Key>yyyyyy</Key>|<Key></Key>|g' p4/tmpinstall/tempauto.xml; fi
     [ $targetoslayoutinfo = 'bioswin' ] && {
     sed -i 's|<PartitionID>x</PartitionID>|<PartitionID>3</PartitionID>|g' p4/tmpinstall/tempauto.xml
     }
