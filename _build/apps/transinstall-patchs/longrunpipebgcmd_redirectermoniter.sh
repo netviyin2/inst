@@ -705,8 +705,8 @@ for step in down parted wgetrans grub; do
            parted -s $hdinfo \
              mkpart primary ext2 2048s `echo $(expr 2048 + 2048 \* 200 - 1)s` \
              mkpart primary fat16 `echo $(expr 2048 + 2048 \* 200)s` `echo $(expr 2048 + 2048 \* 400 - 1)s` \
-             mkpart primary ntfs `echo $(expr 2048 + 2048 \* 400)s` `echo $(expr $total_s - 10 \* 2048 \* 1024 - 1)s` \
-             mkpart primary ntfs `echo $(expr $total_s - 10 \* 2048 \* 1024)s` 100%
+             mkpart primary ntfs `echo $(expr 2048 + 2048 \* 400)s` `echo $(expr $total_s - 20 \* 2048 \* 1024 - 1)s` \
+             mkpart primary ntfs `echo $(expr $total_s - 20 \* 2048 \* 1024)s` 100%
            # on mbr, there is nor msftdata flag nor any typeflag at all except esp
            parted -s $hdinfo set 1 boot on set 2 esp on
            # force fdisk w to noity the kernel (cause problems?), sometimes parted failed on this thus cause not found /dev/sda4 likehood error, we must use fdisk force noity the kernel when after reinit the disk
@@ -723,8 +723,8 @@ for step in down parted wgetrans grub; do
              mkpart non-fs 2048s `echo $(expr 2048 \* 2 - 1)s` \
              mkpart rom `echo $(expr 2048 \* 2)s` `echo $(expr 2048 \* 2 + 2048 \* 200 - 1)s` \
              mkpart rom2 `echo $(expr 2048 \* 2 + 2048 \* 200)s` `echo $(expr 2048 \* 2 + 2048 \* 400 - 1)s` \
-             mkpart sys `echo $(expr 2048 \* 2 + 2048 \* 400)s` `echo $(expr $total_s - 10 \* 2048 \* 1024 - 1)s` \
-             mkpart sys2 `echo $(expr $total_s - 10 \* 2048 \* 1024)s` 100%
+             mkpart sys `echo $(expr 2048 \* 2 + 2048 \* 400)s` `echo $(expr $total_s - 20 \* 2048 \* 1024 - 1)s` \
+             mkpart sys2 `echo $(expr $total_s - 20 \* 2048 \* 1024)s` 100%
            # on gpt, set boot and set efi duplicates and conflicts with eachother and will cause setup.exe issue
            parted -s $hdinfo set 1 bios_grub on set 1 hidden on set 2 boot off set 3 esp on set 4 msftdata on set 5 msftdata on
            # force fdisk w to noity the kernel (cause problems?), sometimes parted failed on this thus cause not found /dev/sda4 likehood error, we must use fdisk force noity the kernel when after reinit the disk
