@@ -98,7 +98,7 @@ Description=Forward local port 3307 to 3306 (socat)
 After=network.target
 [Service]
 Type=simple
-ExecStart=/usr/bin/socat TCP-LISTEN:3307,reuseaddr,fork TCP:127.0.0.1:3306
+ExecStart=/usr/bin/socat TCP-LISTEN:3307,bind=127.0.0.1,range=127.0.0.1/32,reuseaddr,fork TCP:xxxxxx:3306
 Restart=on-failure
 RestartSec=5
 [Install]
@@ -117,34 +117,45 @@ PORT="3306"
 USERNAME="root"
 PASSWORD=\${pw/\//\\\/}
 
-sed -i s/127.0.0.1/\${HOSTNAME}/g /lib/systemd/system/mysqlproxy.service
+sed -i s/xxxxxx/\${HOSTNAME}/g /lib/systemd/system/mysqlproxy.service
 systemctl daemon-reload
 systemctl restart mysqlproxy
 
 # Wait for Mysql to become available.
 sleep 10
-until nc -z -v -w30 \${HOSTNAME} 3306 && nc -z -v -w30 localhost 3307; do
+until nc -z -v -w30 \${HOSTNAME} 3306 && nc -z -v -w30 -4 localhost 3307; do
   echo "Database @\${HOSTNAME} not yet available or you dont have access to remote 3306 or local 3307. Sleeping..."
   sleep 10
 done
 
-mysql -h\${HOSTNAME} -P\${PORT} -u\${USERNAME} -p\${pw} -e "SELECT VERSION();" | grep -q "5.6"
+mysql -h\${HOSTNAME} -P\${PORT} -u\${USERNAME} -p\${pw} -e "SELECT VERSION();" | grep -q "5\.[6-9]\|8\."
 if [ \$? -ne 0 ]; then
-  echo "MySQL 版本不是5.6或验证失败，脚本退出"
+  echo "MySQL 版本必须 ≥ 5.6"
   exit 1
 fi
 
+MAIN_DB_LIST=("d_taiwan" "d_taiwan_secu" "d_technical_report")
+SG_DB_LIST=("d_channel_${SERVER_GROUP_DB}" "d_guild" "taiwan_${SERVER_GROUP_DB}" "taiwan_${SERVER_GROUP_DB}_2nd" "taiwan_${SERVER_GROUP_DB}_log" "taiwan_${SERVER_GROUP_DB}_web" "taiwan_${SERVER_GROUP_DB}_auction_gold" "taiwan_${SERVER_GROUP_DB}_auction_cera" "taiwan_login" "taiwan_prod" "taiwan_game_event" "taiwan_se_event" "taiwan_login_play" "taiwan_billing")
+
 GAMEUSERPASSWORD=\${PASSWORD:0:8}
-# 同时授权来自3306和3307的game用户访问权限
-mysql -h\${HOSTNAME} -P\${PORT} -u\${USERNAME} -p\${pw} -e "GRANT ALL PRIVILEGES ON *.* TO 'game'@'localhost' IDENTIFIED BY '\$GAMEUSERPASSWORD' WITH GRANT OPTION;FLUSH PRIVILEGES;"
-mysql -h\${HOSTNAME} -P\${PORT} -u\${USERNAME} -p\${pw} -e "GRANT ALL PRIVILEGES ON *.* TO 'game'@'\${HOSTNAME%.*}.%' IDENTIFIED BY '\$GAMEUSERPASSWORD' WITH GRANT OPTION;FLUSH PRIVILEGES;"
-# 为game配置大区主数据库和分组数据库的allowed ips
-mysql -h\${HOSTNAME} -P\${PORT} -u\${USERNAME} -p\${pw} -e "GRANT ALL PRIVILEGES ON *.* TO 'game'@'\$(ip route | awk '/default/ { print \$3 }')' IDENTIFIED BY '\$GAMEUSERPASSWORD' WITH GRANT OPTION;FLUSH PRIVILEGES;"
-# 授权通用客户端IP访问权限
-mysql -h\${HOSTNAME} -P\${PORT} -u\${USERNAME} -p\${pw} -e "GRANT ALL PRIVILEGES ON *.* TO 'game'@'%' IDENTIFIED BY '\$GAMEUSERPASSWORD' WITH GRANT OPTION;FLUSH PRIVILEGES;"
+# 创建game用户（兼容>=5.6写法）
+# 1.授权来自内网地址和proxy转发地址的访问权限
+mysql -h\${HOSTNAME} -P\${PORT} -u\${USERNAME} -p\${pw} -e "CREATE USER 'game'@'\${HOSTNAME%.*.*}.%.%' IDENTIFIED BY '\$GAMEUSERPASSWORD';"
+# 2.为game配置大区主数据库和分组数据库的allowed ips
+mysql -h\${HOSTNAME} -P\${PORT} -u\${USERNAME} -p\${pw} -e "CREATE USER 'game'@'\$(ip route | awk '/default/ { print \$3 }')' IDENTIFIED BY '\$GAMEUSERPASSWORD';"
+# 3.授权来自通用客户端IP访问权限
+mysql -h\${HOSTNAME} -P\${PORT} -u\${USERNAME} -p\${pw} -e "CREATE USER 'game'@'%' IDENTIFIED BY '\$GAMEUSERPASSWORD';"
+# 为game用户授权访问权限（兼容root不能授权*.*的情形）
+for db in "\${MAIN_DB_LIST[@]}" "\${SG_DB_LIST[@]}"; do
+  mysql -h\${HOSTNAME} -P\${PORT} -u\${USERNAME} -p\${pw} -e "
+  GRANT ALL ON \$db.* TO 'game'@'\${HOSTNAME%.*.*}.%.%';
+  GRANT ALL ON \$db.* TO 'game'@'\$(ip route | awk '/default/ { print \$3 }')';
+  GRANT ALL ON \$db.* TO 'game'@'%';
+  "
+done
+mysql -h\${HOSTNAME} -P\${PORT} -u\${USERNAME} -p\${pw} -e "FLUSH PRIVILEGES;"
 
 # 循环初始化大区主数据库
-MAIN_DB_LIST=("d_taiwan" "d_taiwan_secu" "d_technical_report")
 for db_name in "\${MAIN_DB_LIST[@]}"
 do
     echo "prepare init \$db_name....."
@@ -191,7 +202,6 @@ ALTER TABLE accounts CHANGE VIP VIP VARCHAR(255) CHARACTER SET utf8 COLLATE utf8
 EOFEOF
 
 # 循环初始化大区分组数据库(you can have multiple server-group -> server-> channels, instead of mainserver -> mainchannel)
-SG_DB_LIST=("d_channel_${SERVER_GROUP_DB}" "d_guild" "taiwan_${SERVER_GROUP_DB}" "taiwan_${SERVER_GROUP_DB}_2nd" "taiwan_${SERVER_GROUP_DB}_log" "taiwan_${SERVER_GROUP_DB}_web" "taiwan_${SERVER_GROUP_DB}_auction_gold" "taiwan_${SERVER_GROUP_DB}_auction_cera" "taiwan_login" "taiwan_prod" "taiwan_game_event" "taiwan_se_event" "taiwan_login_play" "taiwan_billing")
 for db_name in "\${SG_DB_LIST[@]}"
 do
     echo "prepare init \$db_name....."
@@ -284,7 +294,7 @@ find ${DNFS_DIR}/build -type f -name "*.cfg" -print0 | xargs -0 sed -i "s/SERVER
 find ${DNFS_DIR}/build -type f -name "*.cfg" -print0 | xargs -0 sed -i "s/SERVER_GROUP_DB/$SERVER_GROUP_DB/g"
 find ${DNFS_DIR}/build -type f -name "*.cfg" -print0 | xargs -0 sed -i "s/SERVER_GROUP/$SERVER_GROUP/g"
 find ${DNFS_DIR}/build -type f -name "*.tbl" -print0 | xargs -0 sed -i "s/SERVER_GROUP/$SERVER_GROUP/g"
-find ${DNFS_DIR}/build -type f -name "*.cfg" -print0 | xargs -0 sed -i "s/db_ip = 127.0.0.1/db_ip = \${HOSTNAME}/g"
+find ${DNFS_DIR}/build -type f -name "*.cfg" -exec sh -c 'grep -q 3307 "\$0" || sed -i "s/db_ip = 127.0.0.1/db_ip = \${HOSTNAME}/g" "\$0"' {} \\;
 find ${DNFS_DIR}/build -type f -name "*.cfg" -print0 | xargs -0 sed -i "s/GAME_PASSWORD/\$GAMEUSERPASSWORD/g"
 find ${DNFS_DIR}/build -type f -name "*.cfg" -print0 | xargs -0 sed -i "s/DEC_GAME_PWD/\$DEC_GAME_PWD/g"
 # mainly for channel/gamecfgs

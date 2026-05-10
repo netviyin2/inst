@@ -110,7 +110,8 @@ dotrans(){
     cat p4/down/virtio-win-1.9.57.tar.xz|xzcat|tar -xf - -C p4/tmpinstall/drivers
     mkdir -p p4/tmpinstall/drivers/$target
     # addDriver win10x64 "p4/tmpinstall/drivers" "\$WinPEDriver\$" "qxl"
-    for driver in viofs sriov qxldod viorng viostor viomem NetKVM Balloon vioscsi pvpanic vioinput viogpudo vioserial qemupciserial; do
+    # viogpudo has issues with virtioscsi under >win11
+    for driver in viofs sriov qxldod viorng viostor viomem NetKVM Balloon vioscsi pvpanic vioinput vioserial qemupciserial; do
         mkdir -p p4/tmpinstall/drivers/$target/$driver
         cp -Lr p4/tmpinstall/drivers/$driver/$targetoshintwinverinfo/amd64/. p4/tmpinstall/drivers/$target/$driver
     done
@@ -132,6 +133,12 @@ dotrans(){
 <unattend xmlns="urn:schemas-microsoft-com:unattend">
 
     <settings pass="windowsPE">
+        <component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="xxx" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <InputLocale>zh-CN</InputLocale>
+            <SystemLocale>zh-CN</SystemLocale>
+            <UILanguage>zh-CN</UILanguage>
+            <UserLocale>zh-CN</UserLocale>
+        </component>
         <component name="Microsoft-Windows-Setup" processorArchitecture="xxx" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
             <EnableFirewall>false</EnableFirewall>
             <UserData>
@@ -154,12 +161,6 @@ dotrans(){
                     </InstallTo>
                 </OSImage>
             </ImageInstall>
-        </component>
-        <component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="xxx" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-            <InputLocale>zh-CN</InputLocale>
-            <SystemLocale>zh-CN</SystemLocale>
-            <UILanguage>zh-CN</UILanguage>
-            <UserLocale>zh-CN</UserLocale>
         </component>
     </settings>
 
