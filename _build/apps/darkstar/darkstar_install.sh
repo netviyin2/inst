@@ -102,9 +102,9 @@ until nc -z -v -w30 \${HOSTNAME} 3306; do
   sleep 10
 done
 
-mysql -h\${HOSTNAME} -P\${PORT} -u\${USERNAME} -p\${pw} -e "SELECT VERSION();" | grep -q "5.6"
+mysql -h\${HOSTNAME} -P\${PORT} -u\${USERNAME} -p\${pw} -e "SELECT VERSION();" | grep -q "5\.[6-9]\|8\."
 if [ \$? -ne 0 ]; then
-  echo "MySQL 版本不是5.6，脚本退出"
+  echo "MySQL 版本必须 ≥ 5.6"
   exit 1
 fi
 

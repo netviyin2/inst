@@ -149,7 +149,8 @@ cat > /root/start.sh << 'EOL'
 #!/bin/bash
 
 # https://github.com/debiki/talkyard-prod-one/raw/refs/heads/main/conf/play-framework.conf
-echo -en "\ntalkyard.postgresql.host=\"rdb\"" > /root/talkyard/app/conf/app-prod-override.conf.tpl
+echo -en "talkyard.ssr=false" > /root/talkyard/app/conf/app-prod-override.conf.tpl
+echo -en "\ntalkyard.postgresql.host=\"rdb\"" >> /root/talkyard/app/conf/app-prod-override.conf.tpl
 echo -en "\ntalkyard.postgresql.port=\"5432\"" >> /root/talkyard/app/conf/app-prod-override.conf.tpl
 echo -en "\ntalkyard.postgresql.database=\"talkyard\"" >> /root/talkyard/app/conf/app-prod-override.conf.tpl
 echo -en "\ntalkyard.postgresql.user=\"talkyard\"" >> /root/talkyard/app/conf/app-prod-override.conf.tpl
@@ -160,7 +161,7 @@ echo -en "\ntalkyard.hostname=\"localhost\"" >> /root/talkyard/app/conf/app-prod
 echo -en "\ntalkyard.searchhostname=\"search\"" >> /root/talkyard/app/conf/app-prod-override.conf.tpl
 echo -en "\ntalkyard.secure=false" >> /root/talkyard/app/conf/app-prod-override.conf.tpl
 echo -en "\nplay.http.secret.key=\"change_this\"" >> /root/talkyard/app/conf/app-prod-override.conf.tpl
-echo -en "\ntalkyard.becomeOwnerEmailAddress=\"xxx@xxx.com\"" >> /root/talkyard/app/conf/app-prod-override.conf.tpl
+echo -en "\ntalkyard.becomeOwnerEmailAddress=\"test@test.com\"" >> /root/talkyard/app/conf/app-prod-override.conf.tpl
 
 # https://github.com/debiki/talkyard/blob/main/images/web/server-locations.conf
 tee /root/talkyard/web/nginx.default.tpl > /dev/null << 'EOF'
@@ -219,6 +220,7 @@ if [ ! -f /root/inited ]; then
 
   cp /root/talkyard/app/conf/app-prod-override.conf.tpl /root/talkyard/app/conf/app-prod-override.conf
   sed -i "/talkyard.postgresql.host=\"/c\talkyard.postgresql.host=\"$ip\"" /root/talkyard/app/conf/app-prod-override.conf
+  sed -i "/talkyard.postgresql.password=\"/c\talkyard.postgresql.password=\"$pw\"" /root/talkyard/app/conf/app-prod-override.conf
   sed -i "/talkyard.redis.host=\"/c\talkyard.redis.host=\"$rip\"" /root/talkyard/app/conf/app-prod-override.conf
   sed -i "/play.http.secret.key=\"/c\play.http.secret.key=\"key-1111111111111111111111111111111111111111111\"" /root/talkyard/app/conf/app-prod-override.conf
 
