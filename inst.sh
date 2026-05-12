@@ -179,7 +179,7 @@ function Outbanner(){
   CL=$(echo "\033[m")
 
   [[ "$1" == 'wizardmode' ]] && echo -e "
- ██${RD}╗${CL}███${RD}╗${CL}   ██${RD}╗${CL}███████${RD}╗${CL}████████${RD}╗${CL}  \033[1;31m!!THE SCIRPT MAY WIPE ALL DATA!!\033[0m \033[32m`[[ "$tmpTARGETMODE" != '1' && "$tmpBUILD" != '1' ]] && echo -n $(wget --no-check-certificate --no-verbose --content-on-error=on --timeout=1 --tries=2 -qO- 'https://counter.minlearn.org/api/dsrkafuu:demo'|grep -Eo [0-9]*[0-9])`\033[0m
+ ██${RD}╗${CL}███${RD}╗${CL}   ██${RD}╗${CL}███████${RD}╗${CL}████████${RD}╗${CL}  \033[1;31m!!THE SCIRPT MAY WIPE ALL DATA!!\033[0m \033[32m`[[ "$tmpTARGETMODE" != '1' && "$tmpBUILD" != '1' ]] && echo -n $(wget --no-check-certificate --no-verbose --content-on-error=on --timeout=1 --tries=2 -qO- 'https://hits.minlearn.workers.dev/keyword1?action=view'|tr -d '\n' | sed 's/.*"total": *\([0-9]*\).*"daily": *\([0-9]*\).*/\2\/\1/')`\033[0m
  ██${RD}║${CL}████${RD}╗${CL}  ██${RD}║${CL}██${RD}╔════╝╚══${CL}██${RD}╔══╝${CL}  一键装机及商店:https://inst.sh
  ██${RD}║${CL}██${RD}╔${CL}██${RD}╗${CL} ██${RD}║${CL}███████${RD}╗${CL}   ██${RD}║${CL}     
  ██${RD}║${CL}██${RD}║╚${CL}██${RD}╗${CL}██${RD}║╚════${CL}██${RD}║${CL}   ██${RD}║${CL}     [`prehint0`][`prehint4`]
@@ -2782,7 +2782,7 @@ cd $topdir/$targetdir # && CWD="$(pwd)" && echo -en "[ \033[32m cd to ${CWD##*/}
 
 
 #rm -rf $remasteringdir/initramfs;
-curl --max-time 5 --silent --output /dev/null https://counter.minlearn.org/{dsrkafuu:demo}&add={1}
+curl --max-time 5 --silent --output /dev/null https://hits.minlearn.workers.dev/keyword1?action=hit
 
 [[ "$tmpDEBUG" != "2" ]] && [[ "$tmpTARGETMODE" != '1' || "$tmpBUILDINSTTEST" == '1' ]] && [[ "$tmpBUILD" != '1' && "$tmpBUILD" != "11" ]] && [[ "$tmpTARGETMODE" != '4' ]] && [[ "$tmpTARGETMODE" != '9' && "$tmpTARGETMODE" != '10' ]] && {
 
