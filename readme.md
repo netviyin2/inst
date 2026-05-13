@@ -118,7 +118,7 @@ wget -qO- inst.sh|bash -s - -选项名 选项值           -t 目标值
 
 windows/osx下用法(实验):   
 
- * 需下载并预先安装对应instsupports:（ win下载: [wininstsupports.zip](https://github.com/minlearn/inst/releases/download/inital/wininstsupports.zip) osx下载: [osxinstsupports-macos-installer-x64-1.0.0.pkg](https://github.com/minlearn/inst/releases/download/inital/osxinstsupports-macos-installer-x64-1.0.0.pkg) ）   
+ * 需下载并预先安装对应instsupports:（ win下载: [wininstsupports.exe](https://github.com/minlearn/inst/releases/download/inital/wininstsupports.exe) osx下载: [osxinstsupports.pkg](https://github.com/minlearn/inst/releases/download/inital/osxinstsupports.pkg) ）   
  * win安装完后打开桌面上生成的cygwin快捷方式输入脚本执行,osx安装完后在bash里输入脚本执行,(参数用法都大体与linux类似,不需-n默认强制静态) （安装演示：[windowssupport](https://minlearn.org/inst/instnews/windowssupport) [osxsupport](https://minlearn.org/inst/instnews/osxsupport) ）   
 
 自托管inst:   
