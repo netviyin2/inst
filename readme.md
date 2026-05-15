@@ -123,7 +123,7 @@ windows/osx下用法(实验):
 
 自托管inst:   
 
- * fork本仓库，编辑你fork到仓库的inst.sh文件，给头部变量定义区的FORCEREPOMIRROR/FORCEDEBMIRROR/FORCERLSMIRROR赋值为你的对应对址，用 "https://github.com/你的github用户名/inst/raw/master/inst.sh" 脚本地址调用脚本，你也可以加-m "你的新repomirror,debmirror,rlsmirror"参数的方式调用https://inst.sh脚本  
+ * fork本仓库，然后修改你fork到仓库的inst.sh头部变量定义区的FORCEREPOMIRROR/FORCEDEBMIRROR/FORCERLSMIRROR赋值为你仓库的对应对址，用 "https://github.com/你的github用户名/inst/raw/master/inst.sh" 脚本地址调用命令，你也可以用加"-m 你的新repomirror,debmirror,rlsmirror"参数的方式调用命令  
  * 按_build/inst已有samples，编写自己的安装逻辑并调用。  
  * 参照_build/appp每个app的目录结构，自己增加app脚本和逻辑  
 
