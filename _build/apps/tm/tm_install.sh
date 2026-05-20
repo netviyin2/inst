@@ -37,7 +37,7 @@ Environment="DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true"
 Environment="DOTNET_CLI_TELEMETRY_OPTOUT=1"
 Type=simple
 ExecStartPre=/bin/sleep 2
-ExecStart=/bin/bash -c "PATH=/usr/local/bin:$PATH exec /usr/local/bin/Cli start accept --token xxxxxxxxxxxxxxxx --device-name amd-$$[RANDOM%%65535]"
+ExecStart=/bin/bash -c "PATH=/usr/local/bin:$PATH exec /usr/local/bin/Cli start accept --token xxxxxxxxxxxxxxxx --device-name amd-$$[RANDOM%%65535] status statistics"
 Restart=on-failure
 
 [Install]
