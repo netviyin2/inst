@@ -44,6 +44,8 @@ bundle config set --local path "/root/chatwoot/gems"
 bundle install --jobs 4 --retry 3
 
 cat > /root/start.sh << 'EOL'
+#!/bin/bash
+
 # need reactive again or add env into shebang? in case to avoid bundle comand not found
 [ -f /etc/profile.d/rvm.sh ] && source /etc/profile.d/rvm.sh || source "$HOME/.rvm/scripts/rvm"
 
@@ -102,7 +104,7 @@ if [ ! -f /root/inited ]; then
     VACUUM FREEZE;
 EOF
 
-  RAILS_ENV=production BUNDLE_PATH=/root/chatwoot/gems bin/bundle exec bin/rails db:chatwoot_prepare
+  RAILS_ENV=production BUNDLE_PATH=/root/chatwoot/gems bundle exec rails db:chatwoot_prepare
 
   # https://github.com/chatwoot/chatwoot/blob/master/deployment/chatwoot-worker.service
   tee /etc/systemd/system/chatwoot-worker.service > /dev/null << 'EOF'
@@ -119,7 +121,7 @@ WorkingDirectory=/root/chatwoot/app
 Environment="RAILS_ENV=production"
 Environment="BUNDLE_PATH=/root/chatwoot/gems"
 #用/bin/bash套起来从主机自动获取环变和路径，否则systemd默认得不到ruby需要的大量环境变量和路径需要手动喂
-ExecStart=/bin/bash -lc 'bin/bundle exec bin/sidekiq -C config/sidekiq.yml'
+ExecStart=/bin/bash -lc 'bin/bundle exec sidekiq -C config/sidekiq.yml'
 
 [Install]
 WantedBy=multi-user.target
