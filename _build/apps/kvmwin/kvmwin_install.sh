@@ -111,7 +111,7 @@ cpuoptions="host" #"host,kvm=on,l3-cache=on,+hypervisor,migratable=no,-vmx,hv_pa
 args=(
 -nodefaults
 -cpu ${cpuoptions}
--smp 2,sockets=1,dies=1,cores=2,threads=1
+-smp sockets=1,dies=1,cores=2,threads=1
 -m 2G
 -machine type=q35,smm=on,graphics=off,vmport=off,dump-guest-core=off,hpet=off,accel=kvm
 -enable-kvm

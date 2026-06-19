@@ -248,8 +248,8 @@ cat > /root/start.sh << 'EOL'
 
 ROOT=$(cd "$(dirname "$0")" && TMPDIR="$(pwd)" mktemp -d)
 
-TARGET=${1:?Specify the target filename}
-DIST=${2:-stable}
+TARGET=${1:-bookworm.tar.gz}
+DIST=${2:-bookworm}
 PLATFORM=${3:-$(dpkg --print-architecture)}
 
 LOGFILE=${TARGET}.log

@@ -74,7 +74,7 @@ fi
 args=(
  -nodefaults
  -cpu ${cpuoptions}
- -smp 2,sockets=1,dies=1,cores=2,threads=1
+ -smp sockets=1,dies=1,cores=2,threads=1
  -m 2G
  -machine type=q35,smm=off,graphics=off,vmport=off,dump-guest-core=off,hpet=off,accel=kvm
  -enable-kvm

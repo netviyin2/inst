@@ -46,7 +46,7 @@ bundle install --jobs 4 --retry 3
 cat > /root/start.sh << 'EOL'
 #!/bin/bash
 
-# need reactive again or add env into shebang? in case to avoid bundle comand not found
+# need reactive again or add "/bin/env bash" into shebang? in case to avoid bundle comand not found
 [ -f /etc/profile.d/rvm.sh ] && source /etc/profile.d/rvm.sh || source "$HOME/.rvm/scripts/rvm"
 
 cd /root/chatwoot
