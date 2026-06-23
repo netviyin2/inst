@@ -76,9 +76,9 @@ wget -qO- inst.sh|bash -s - -选项名 选项值           -t 目标值
 | debian12         | wikihost     | 2-4G     | amd64 | BIOS        | inst.sh       | [debian12.qcow2](https://down.idc.wiki/Image/realServer-Template/current/qcow2/debian12.qcow2) |
 | debian12 live    | debian       | 2-4G     | amd64 | BIOS+UEFI   | inst.sh       | [debian-live-12-gnome.iso](http://cdimage.debian.org/cdimage/archive/12.11.0-live/amd64/iso-hybrid/debian-live-12.11.0-amd64-gnome.iso) |
 | ubuntu24 live    | ubuntu       | 4-6G     | amd64 | BIOS+UEFI   | inst.sh       | [ubuntu-24.04-desktop.iso](https://releases.ubuntu.com/24.04.2/ubuntu-24.04.2-desktop-amd64.iso) |
-| win10 ltsc       | microsoft    | 16.0GB   | amd64 | BIOS+UEF    | inst.sh       | [zh-cn_windows_10_ltsc.iso](https://download.testip.xyz/Windows/zh-cn_windows_10_enterprise_ltsc_2021_x64_dvd_033b7312.iso) |
+| win10 ltsc       | microsoft    | 16.0GB   | amd64 | BIOS+UEF    | inst.sh       | [zh-cn_windows_10_ltsc.iso](https://guest:guest@d.minlearn.org/dav/win10/zh-cn_windows_10_enterprise_ltsc_2021_x64_dvd_033b7312.iso) |
 | win11            | bin456789    | 10.0GB   | arm64 | UEFI        | 123@@@        | [en-us_windows11_ltsc_arm64.xz](https://r2.hotdog.eu.org/en-us_windows_11_enterprise_ltsc_2024_arm64_10g_123%40%40%40.xz) |
-| winserver 2022   | microsoft    | 16.0GB   | amd64 | BIOS+UEF    | inst.sh       | [zh-cn_windows_server_2022.iso](https://download.testip.xyz/Windows/zh-cn_windows_server_2022_updated_july_2025_x64_dvd_f3e39b78.iso) |
+| winserver 2022   | microsoft    | 16.0GB   | amd64 | BIOS+UEF    | inst.sh       | [zh-cn_windows_server_2022.iso](https://guest:guest@d.minlearn.org/dav/winsrv2022/zh-cn_windows_server_2022_updated_june_2026_x64_dvd_dda28eeb.iso) |
   
 这里收集了一些linux app速查：  
 

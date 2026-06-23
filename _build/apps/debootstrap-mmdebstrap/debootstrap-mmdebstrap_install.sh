@@ -35,6 +35,7 @@ echo "debootstraping"
   ln -s /usr/lib/cdebconf/debconf-copydb dat/usr/bin/debconf-copydb
   ln -s /usr/lib/cdebconf/debconf-dumpdb dat/usr/bin/debconf-dumpdb
   ln -s /usr/lib/cdebconf/debconf-loadtemplate dat/usr/bin/debconf-loadtemplate
+  # 你敢信，cdebconf 居然依赖debconf, 移除 debconf 依赖,并显式break debconf
   sed -e "s/debconf,\ //g" -e '$a\Breaks: debconf' -i ctl/control
   tar -C ctl -cJf control.tar.xz ./
   tar -C dat -cJf data.tar.xz ./
