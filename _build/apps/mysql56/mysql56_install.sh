@@ -44,6 +44,7 @@ echo -e "MySQL password: $ADMIN_PASS" >>~/mysql.creds
 echo "MySQL Server configured"
 
 echo -e "[mysqld]\nbind-address = 0.0.0.0" >> /etc/mysql/my.cnf
+echo "lower_case_table_names=1" >> /etc/mysql/my.cnf
 systemctl restart mysql
 
 read -r -p "Would you like to add PhpMyAdmin? <y/N> " prompt </dev/tty
