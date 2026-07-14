@@ -20,7 +20,39 @@ npm install -g vitepress@1.6.4 pm2
 
 cat > /root/start.sh << 'EOL'
 cd /root
-npm create vitepress vitepress-dev --yes
+# create vitepress project
+# npm create vitepress vitepress-dev --yes
+
+# use self-write manner instead
+mkdir vitepress-dev
+cat > vitepress-dev/package.json <<'EOF'
+{
+  "name": "vitepress-dev",
+  "type": "module",
+  "scripts": {
+    "dev": "vitepress dev docs",
+    "build": "vitepress build docs",
+    "preview": "vitepress preview docs"
+  },
+  "devDependencies": {
+    "vitepress": "^1.6.4",
+    "vue": "^3.5.0"
+  }
+}
+EOF
+mkdir -p vitepress-dev/docs/.vitepress
+cat > vitepress-dev/docs/index.md <<'EOF'
+# Hello VitePress
+EOF
+cat > vitepress-dev/docs/.vitepress/config.js <<'EOF'
+import { defineConfig } from 'vitepress'
+export default defineConfig({
+  title: "vitepress demo",
+  vite: {
+    server: { host: "0.0.0.0" }
+  }
+})
+EOF
 
 cd vitepress-dev
 npm install
