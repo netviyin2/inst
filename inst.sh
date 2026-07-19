@@ -2238,7 +2238,7 @@ mkdir -p $downdir $remasteringdir $targetdir
 
   while [[ -z "$tmpTARGET" ]]; do
     # bash read don't show prompt while using with exec sudo bash -c "`cat -`" -a "$@",,so we should
-    echo -n "target needed, type a target to go, or any -option to continue: ";trap 'printf \\e[33m' DEBUG;trap 'printf \\e[0m' EXIT;read -p "" NN </dev/tty;trap 'printf \\e[0m' DEBUG
+    echo -n "target needed, type a target to go, or -t to list some targets: ";trap 'printf \\e[33m' DEBUG;trap 'printf \\e[0m' EXIT;read -p "" NN </dev/tty;trap 'printf \\e[0m' DEBUG
     case $NN in
       -m) read -p "Enter your own FORCEREPOMIRROR directlink (or type to use inbuilt: `echo -e "\033[33mgithub,gitea\033[0m"`): " FORCEREPOMIRROR </dev/tty;[[ "$FORCEREPOMIRROR" == 'github' ]] && FORCEREPOMIRROR=$autoREPOMIRROR0;[[ "$FORCEREPOMIRROR" == 'gitea' ]] && FORCEREPOMIRROR=$autoREPOMIRROR1 ;;
       -i) read -p "Enter your own FORCE1STNICNAME (format: `echo -e "\033[33mensp0\033[0m"`): " FORCE1STNICNAME </dev/tty ;;
