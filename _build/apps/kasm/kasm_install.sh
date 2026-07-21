@@ -10,7 +10,7 @@ silent apt-get update -y
 silent apt-get install -y curl sudo mc iptables
 echo "Installed Dependencies"
 
-silent apt-get install -y fuse
+silent apt-get install -y fuse3
 
 rlsmirror=${2:-https://github.com/minlearn/inst/releases/download/inital}
 if command -v docker >/dev/null 2>&1; then
@@ -54,6 +54,8 @@ wget --no-check-certificate https://kasm-static-content.s3.amazonaws.com/kasm_re
 tar -zxvf download/kasm.tar.gz -C /root
 
 cat <<EOF >/root/install.sh
+docker stop `docker ps -a -q`
+docker rm `docker ps -a -q`
 # 临时放开socket所有读写权限（仅安装期间使用）
 chmod 666 /var/run/docker.sock
 
@@ -67,7 +69,10 @@ bash kasm_release/install.sh \
 --offline-service download/kasm_release_service_images.tar.gz \
 --offline-workspaces download/kasm_release_workspace_images.tar.gz \
 --offline-plugin download/kasm_release_plugin_images.tar.gz \
---install-depends
+--install-depends \
+--skip-v4l2loopback \
+--skip-custom-rclone \
+--skip-egress
 
 # 恢复安全权限
 chmod 660 /var/run/docker.sock
