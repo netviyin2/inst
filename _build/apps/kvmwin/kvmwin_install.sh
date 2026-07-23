@@ -85,7 +85,7 @@ if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
 
     # buildimage
     genisoimage -o mywin/10-rebuilt.iso -b boot/etfsboot.com -no-emul-boot -c BOOT.CAT -iso-level 4 -J -l -D -N -joliet-long -relaxed-filenames -V "Windows" \
--udf -boot-info-table -eltorito-alt-boot -eltorito-boot efi/microsoft/boot/efisys_noprompt.bin -no-emul-boot -allow-limited-size -quiet tmpinstall/extracted
+-udf -boot-info-table -eltorito-alt-boot -eltorito-boot efi/microsoft/boot/efisys_noprompt.bin -allow-limited-size -quiet tmpinstall/extracted
     cp download/windows_secure.rom download/windows_secure.vars mywin
     qemu-img create -f qcow2 mywin/data.img 40G
 fi
@@ -144,6 +144,15 @@ args=(
 qemu-system-x86_64 "${args[@]}"
 EOL
 chmod +x /root/start.sh
+
+    cat > /root/win7patcher.sh << 'EOL'
+# w7driver?
+sed -e s#-no-emul-boot#-no-emul-boot[[:space:]]-boot-load-size[[:space:]]8#g -i /root/start.sh
+sed -e s#type=q35,smm=on#type=pc#g -i /root/start.sh
+sed -e s#if=pflash#d -i /root/start.sh
+sed -e s#pcie.0#pci.0#g -i /root/start.sh
+EOL
+chmod +x /root/win7patcher.sh
 
     cat > /etc/systemd/system/kvm-restore.service << 'EOF'
 [Unit]
