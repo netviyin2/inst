@@ -416,7 +416,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-08-19"
+      "lastUpdated": "2026-08-22"
     },
     {
       "id": "instrepos-bin456789",
@@ -427,7 +427,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-08-19"
+      "lastUpdated": "2026-08-22"
     },
     {
       "id": "instrepos-linuxlive",
@@ -438,7 +438,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-08-19"
+      "lastUpdated": "2026-08-22"
     },
     {
       "id": "instrepos-natee",
@@ -449,7 +449,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-08-19"
+      "lastUpdated": "2026-08-22"
     },
     {
       "id": "instrepos-teddysun",
@@ -460,7 +460,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-08-19"
+      "lastUpdated": "2026-08-22"
     },
     {
       "id": "instrepos-wikihost",
@@ -471,7 +471,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-08-19"
+      "lastUpdated": "2026-08-22"
     },
     {
       "id": "instrepos-windowsisos",
@@ -482,7 +482,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-08-19"
+      "lastUpdated": "2026-08-22"
     }
   ],
   "docs": {
@@ -735,7 +735,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-08-19",
+      "lastUpdated": "2026-08-22",
       "category": "instrepos"
     },
     "instrepos-bin456789": {
@@ -747,7 +747,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-08-19",
+      "lastUpdated": "2026-08-22",
       "category": "instrepos"
     },
     "instrepos-linuxlive": {
@@ -759,7 +759,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-08-19",
+      "lastUpdated": "2026-08-22",
       "category": "instrepos"
     },
     "instrepos-natee": {
@@ -771,7 +771,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-08-19",
+      "lastUpdated": "2026-08-22",
       "category": "instrepos"
     },
     "instrepos-teddysun": {
@@ -783,7 +783,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-08-19",
+      "lastUpdated": "2026-08-22",
       "category": "instrepos"
     },
     "instrepos-wikihost": {
@@ -795,7 +795,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-08-19",
+      "lastUpdated": "2026-08-22",
       "category": "instrepos"
     },
     "instrepos-windowsisos": {
@@ -807,7 +807,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-08-19",
+      "lastUpdated": "2026-08-22",
       "category": "instrepos"
     }
   }

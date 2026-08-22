@@ -11,7 +11,7 @@
           "slug": "mariadb",
           "name": "mariadb",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "mariadb"
         },
@@ -20,7 +20,7 @@
           "slug": "mongodb",
           "name": "mongodb",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "mongodb"
         },
@@ -29,7 +29,7 @@
           "slug": "mysql57",
           "name": "mysql57",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "mysql57"
         },
@@ -38,7 +38,7 @@
           "slug": "postgresql",
           "name": "postgresql",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "postgresql"
         },
@@ -47,7 +47,7 @@
           "slug": "redis",
           "name": "redis",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "redis"
         }
@@ -64,7 +64,7 @@
           "slug": "chat-cf",
           "name": "chat-cf",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "chat-cf"
         },
@@ -73,7 +73,7 @@
           "slug": "counter",
           "name": "counter",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "counter"
         },
@@ -82,7 +82,7 @@
           "slug": "discuss-cf",
           "name": "discuss-cf",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "discuss-cf"
         },
@@ -91,7 +91,7 @@
           "slug": "gitbook",
           "name": "gitbook",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "gitbook"
         },
@@ -100,7 +100,7 @@
           "slug": "kasmvnc",
           "name": "kasmvnc",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "kasmvnc"
         },
@@ -109,7 +109,7 @@
           "slug": "nextcloud",
           "name": "nextcloud",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "nextcloud"
         },
@@ -118,7 +118,7 @@
           "slug": "ollama",
           "name": "ollama",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "ollama"
         },
@@ -127,7 +127,7 @@
           "slug": "openwebui",
           "name": "openwebui",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "openwebui"
         },
@@ -136,7 +136,7 @@
           "slug": "vncterm",
           "name": "vncterm",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "vncterm"
         },
@@ -145,7 +145,7 @@
           "slug": "wordpress",
           "name": "wordpress",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "wordpress"
         }
@@ -162,7 +162,7 @@
           "slug": "buildkernel",
           "name": "buildkernel",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "buildkernel"
         },
@@ -171,7 +171,7 @@
           "slug": "cloudflared",
           "name": "cloudflared",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "cloudflared"
         },
@@ -180,7 +180,7 @@
           "slug": "code-server",
           "name": "code-server",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "code-server"
         },
@@ -189,7 +189,7 @@
           "slug": "debian-installer",
           "name": "debian-installer",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "debian-installer"
         },
@@ -198,7 +198,7 @@
           "slug": "debmirror",
           "name": "debmirror",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "debmirror"
         },
@@ -207,7 +207,7 @@
           "slug": "debootstrap",
           "name": "debootstrap",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "debootstrap"
         },
@@ -216,7 +216,7 @@
           "slug": "dibootstrap",
           "name": "dibootstrap",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "dibootstrap"
         },
@@ -225,7 +225,7 @@
           "slug": "docker",
           "name": "docker",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "docker"
         },
@@ -234,7 +234,7 @@
           "slug": "gitea",
           "name": "gitea",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "gitea"
         },
@@ -243,7 +243,7 @@
           "slug": "golang",
           "name": "golang",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "golang"
         },
@@ -252,7 +252,7 @@
           "slug": "iplc",
           "name": "iplc",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "iplc"
         },
@@ -261,7 +261,7 @@
           "slug": "jigdo",
           "name": "jigdo",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "jigdo"
         },
@@ -270,7 +270,7 @@
           "slug": "mmdebstrap",
           "name": "mmdebstrap",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "mmdebstrap"
         },
@@ -279,7 +279,7 @@
           "slug": "nbd",
           "name": "nbd",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "nbd"
         },
@@ -288,7 +288,7 @@
           "slug": "nodejs",
           "name": "nodejs",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "nodejs"
         },
@@ -297,7 +297,7 @@
           "slug": "python",
           "name": "python",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "python"
         }
@@ -314,7 +314,7 @@
           "slug": "bxcq",
           "name": "bxcq",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "bxcq"
         }
@@ -331,7 +331,7 @@
           "slug": "android",
           "name": "android",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "android"
         },
@@ -340,7 +340,7 @@
           "slug": "debiande",
           "name": "debiande",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "debiande"
         },
@@ -349,7 +349,7 @@
           "slug": "kvmosx",
           "name": "kvmosx",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "kvmosx"
         },
@@ -358,7 +358,7 @@
           "slug": "kvmwin",
           "name": "kvmwin",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "kvmwin"
         },
@@ -367,7 +367,7 @@
           "slug": "owt",
           "name": "owt",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "owt"
         },
@@ -376,7 +376,7 @@
           "slug": "proxmox-backup",
           "name": "proxmox-backup",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "proxmox-backup"
         },
@@ -385,7 +385,7 @@
           "slug": "proxmox-ve",
           "name": "proxmox-ve",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "proxmox-ve"
         },
@@ -394,7 +394,7 @@
           "slug": "qemu",
           "name": "qemu",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "qemu"
         },
@@ -403,7 +403,7 @@
           "slug": "redriod",
           "name": "redriod",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "redriod"
         }
@@ -420,7 +420,7 @@
           "slug": "chrome",
           "name": "chrome",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "chrome"
         },
@@ -429,7 +429,7 @@
           "slug": "clashmeta",
           "name": "clashmeta",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "clashmeta"
         },
@@ -438,7 +438,7 @@
           "slug": "dummy",
           "name": "dummy",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "dummy"
         },
@@ -447,7 +447,7 @@
           "slug": "ovhauto",
           "name": "ovhauto",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "ovhauto"
         },
@@ -456,7 +456,7 @@
           "slug": "playwright",
           "name": "playwright",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "playwright"
         },
@@ -465,7 +465,7 @@
           "slug": "tm",
           "name": "tm",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "tm"
         },
@@ -474,7 +474,7 @@
           "slug": "xmrig",
           "name": "xmrig",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "xmrig"
         },
@@ -483,7 +483,7 @@
           "slug": "xray",
           "name": "xray",
           "type": "script",
-          "date_created": "2026-08-19",
+          "date_created": "2026-08-22",
           "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
           "description": "xray"
         }
