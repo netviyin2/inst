@@ -1017,7 +1017,7 @@ function getbasics(){
 
 
   [[ "$tmpHOSTARCH" == '0' ]] && [[ "$1" == 'down' && ( "$tmpTARGETMODE" == '9' || "$tmpTARGETMODE" == '10' ) && "$tmpTARGET" != '' && "$tmpPVEREADY" != '1' ]] && {
-    download_file $RLSMIRROR/epvecore.xz $downdir/debianbase/epvecore.xz 0
+    download_file $RLSMIRROR/epvecore.tar.xz $downdir/debianbase/epvecore.tar.xz 0
     download_file $RLSMIRROR/lxcdebtpl.tar.xz $downdir/debianbase/lxcdebtpl.tar.xz 0
 
     for i in criu_3.15-1-pve-1_amd64.deb lxcfs_5.0.3-pve1_amd64.deb vncterm_1.7-1_amd64.deb pve-lxc-syscalld_1.2.2-1_amd64.deb lxc-pve_5.0.2-2_amd64.deb;do download_file $RLSMIRROR/$i $downdir/debianbase/$i 1;done
@@ -1025,7 +1025,7 @@ function getbasics(){
   }
 
   [[ "$tmpHOSTARCH" == '1' ]] && [[ "$1" == 'down' && ( "$tmpTARGETMODE" == '9' || "$tmpTARGETMODE" == '10' ) && "$tmpTARGET" != '' && "$tmpPVEREADY" != '1' ]] && {
-    download_file $RLSMIRROR/epvecore_arm64.xz $downdir/debianbase/epvecore_arm64.xz 0
+    download_file $RLSMIRROR/epvecore_arm64.tar.xz $downdir/debianbase/epvecore_arm64.tar.xz 0
     download_file $RLSMIRROR/lxcdebtpl_arm64.tar.xz $downdir/debianbase/lxcdebtpl_arm64.tar.xz 0
 
     for i in criu_3.15-1_arm64.deb vncterm_1.7-1_arm64.deb pve-lxc-syscalld_1.0.0-1_arm64.deb lxc-pve_5.0.0-3_arm64.deb;do download_file $RLSMIRROR/$i $downdir/debianbase/$i 1;done
@@ -1475,6 +1475,10 @@ installdeps(){
 
   (
   set -e
+
+  # update-rc.d temply disabled until xxx
+  [ -f /usr/sbin/policy-rc.d ] && mv /usr/sbin/policy-rc.d /usr/sbin/policy-rc.d.bak
+
   # bridge-utils,isc-dhcp-server need to install as early as possiable and standalone, or siblings may broken it causing apt-get --fix-broken conflicts, thus make connection lost
   apt-get install -y -qq --no-install-recommends bridge-utils isc-dhcp-server > /dev/null || exit 1
   # libgnutlsxx28,libprotobuf23 need to install as early as possiable and standalone, or siblings may broken it causing apt-get --fix-broken conflicts
@@ -1512,6 +1516,9 @@ installdeps(){
   [[ "$tmpHOSTARCH" == '1' ]] && { dpkg -i $downdir/debianbase/{vncterm_1.7-1_arm64.deb,pve-lxc-syscalld_1.0.0-1_arm64.deb} > /dev/null || exit 1; }
 
   apt-get install -y -qq --no-install-recommends dtach > /dev/null || exit 1
+
+  # mv back
+  [ -f /usr/sbin/policy-rc.d.bak ] && mv /usr/sbin/policy-rc.d.bak /usr/sbin/policy-rc.d
 
   mkdir -p /var/lib/rrdcached/db
   ) 2> >(grep -Ev '^(Created symlink |Extracting templates from packages: |apparmor_parser:)' >&2) || exit 1
@@ -2296,7 +2303,7 @@ while [[ $# -ge 1 ]]; do
       )
       FORCEDEBMIRROR=$(
         case "$FORCEDEBMIRROR" in
-          ustc)  echo "http://mirrors.ustc.edu.cn/debian" ;;
+          ustc)  echo "http://mirrors.aliyun.com/debian-archive/debian" ;;
              *)  echo "$FORCEDEBMIRROR" ;;
         esac
       )
@@ -2497,11 +2504,11 @@ fi
 
 # get external debianmirror, default policy, just simple enough to spin up
 if [[ "$REPOMIRROR" =~ "github" ]]; then
-  [[ -z "$FORCEDEBMIRROR" ]] && DEBMIRROR="http://deb.debian.org/debian"
+  [[ -z "$FORCEDEBMIRROR" ]] && DEBMIRROR="http://archive.debian.org/debian"
   [[ -n "$FORCEDEBMIRROR" ]] && DEBMIRROR=$FORCEDEBMIRROR
   #echo -en "[ \033[32m ${DEBMIRROR} \033[0m ]"
 else
-  [[ -z "$FORCEDEBMIRROR" ]] && DEBMIRROR="http://mirrors.ustc.edu.cn/debian"
+  [[ -z "$FORCEDEBMIRROR" ]] && DEBMIRROR="http://mirrors.aliyun.com/debian-archive/debian"
   [[ -n "$FORCEDEBMIRROR" ]] && DEBMIRROR=$FORCEDEBMIRROR
   #echo  -en "[ \033[32m ${DEBMIRROR} \033[0m ]"
 fi
@@ -2531,7 +2538,8 @@ case $tmpTARGET in
     DEBVER=`echo "$tmpTARGET" | grep -oP '(?<=debian)\d+' || echo 11`
     if [[ ! "$DEBVER" =~ ^[0-9]+$ || "$DEBVER" -gt 12 || "$DEBVER" -lt 10 ]]; then echo "bad debver" && exit; fi
     TARGETDDURL=$(
-      [[ "$DEBVER" == '10' ]] && echo "https://snapshot.debian.org/archive/debian/20231007T024024Z" || echo "$DEBMIRROR"
+      [[ "$DEBVER" == '10' ]] && echo "https://snapshot.debian.org/archive/debian/20240629T000000Z" || \
+      [[ "$DEBVER" == '11' ]] && echo "https://archive.debian.org/debian" ||  echo "$DEBMIRROR"
     ) ;;
   devdeskos*) [[ "$REPOMIRROR" =~ "/raw/master" ]] && { ifgap="${REPOMIRROR#*inst}";ifgap="${ifgap%raw\/master*}";ifgap="${ifgap//\//}";[[ -z "$ifgap" ]] && IMGMIRROR=${REPOMIRROR/\/inst\/raw\/master/}"/xxxxxx/raw/master" || IMGMIRROR=${REPOMIRROR/\/inst\/$ifgap\/raw\/master/}"/xxxxxx/$ifgap/raw/master"; } || IMGMIRROR=${REPOMIRROR/\/inst/}"/xxxxxx";TARGETDDURL=${IMGMIRROR/xxxxxx/1kdd}"/_build/devdeskos/binary$([ "$tmpHOSTARCH" == '1' -a "$tmpHOSTARCH" != '' ]  && echo -n -arm64 || echo -n -amd64)/tarball"
     CheckTargeturl $TARGETDDURL"/onekeydevdeskd-01core$([ "$tmpHOSTARCH" == '1' -a "$tmpHOSTARCH" != '' ]  && echo _arm64).xz_000.chunk" ;;
@@ -2600,7 +2608,7 @@ mkdir -p $downdir/debianbase
   buildsetupfuns
   setupnetwork
 
-  tar -xJf $downdir/debianbase/epvecore$([ "$tmpHOSTARCH" == '1' -a "$tmpHOSTARCH" != '' ]  && echo _arm64).xz -C / --no-overwrite-dir --keep-directory-symlink
+  tar -xJf $downdir/debianbase/epvecore$([ "$tmpHOSTARCH" == '1' -a "$tmpHOSTARCH" != '' ]  && echo _arm64).tar.xz -C / --no-overwrite-dir --keep-directory-symlink
   cp $downdir/debianbase/lxcdebtpl$([ "$tmpHOSTARCH" == '1' -a "$tmpHOSTARCH" != '' ]  && echo _arm64).tar.xz /var/lib/vz/template/cache
 
   [[ -z "$tmpTGTNICIP" ]] && echo "nicip not given,will exit" && exit

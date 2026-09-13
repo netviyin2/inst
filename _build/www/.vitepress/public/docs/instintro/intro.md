@@ -52,7 +52,7 @@ curl -sSL inst.sh|bash -s - -选项名 选项值           -t 目标值
    * 指定硬盘名:            │ -p sda/sda,noid...   │    ./xxx.gz             │ * ./xxx.gz是本地dd文件名    
    * 指定网络栈:            │ -6 1                 │    10000:/dev/sda       │ * 10000:/dev/sda是nc打包导出地址       
    * 指定调试中:            │ -d ...:...           │    dummy                │ * dummy是空目标仅供调试模式用   
-       注入穿透件:          │    22:ratholesrvip   │    devdesk              │ * embeded pve with lxc         
+       注入穿透件:          │    22:ratholesrvip   │    devdesk              │ * embeded pve with lxc(安装完端口是8000不是8006)         
        改进度端口:          │    vnc:8000          │    devdesklv/ct/de      │ * pvelive/pveovz/pveqemu(dreprecated)    
    * 指定完成后:            │ -o ...:...           │    appname ...          │ * appname是要直接安装的devdeskos app名,配合源参数使用更好     
        指定一密码:          │    pass:xx           │    docker ...           │ * docker是oci容器,如redriod     
