@@ -88,8 +88,8 @@ logger -t minlearnadd preddtime PIPECMDSTR:"$PIPECMDSTR"
 
 down(){
 
-  debmirror=${DEBIANURL:-http://deb.debian.org/debian}
-  echo -e "deb [trusted=yes] ${debmirror} bullseye main\ndeb [trusted=yes] ${debmirror} bullseye-updates main\ndeb [trusted=yes] ${debmirror}-security bullseye-security main" > /etc/apt/sources.list
+  debmirror=${DEBIANURL:-http://archive.debian.org/debian}
+  echo -e "deb [trusted=yes] ${debmirror} bullseye main\ndeb [trusted=yes] ${debmirror} bullseye-updates main" > /etc/apt/sources.list # \ndeb [trusted=yes] ${debmirror}-security bullseye-security main
 
   echo "Installing Dependencies"
   apt-get update

@@ -262,7 +262,7 @@ function CheckDependence(){
     [[ $? == '0' ]] && echo -en "[ \033[32m done. \033[0m ]" || { echo;echo -en "\033[31m $lostdeplist missing !error happen while autoinstall! please fix to run 'yum update && yum install $lostpkglist ' to install them\033[0m";exit 1; }
     fi
     if [[ ! $(command -v yum) && $(command -v apt-get) ]]; then
-    apt-get update --allow-releaseinfo-change --allow-unauthenticated --allow-insecure-repositories -y -qq  >/dev/null 2>&1
+    apt-get update -o Acquire::Check-Valid-Until=false --allow-releaseinfo-change --allow-unauthenticated --allow-insecure-repositories -y -qq  >/dev/null 2>&1
     # use reinstall but not install, cause some pkgs maybe already there, but indeedly broken in bin/deps level(the bin were wrong delt)
     # dont use apt-get update && apt-get reinstall here,cause apt-get update may fail but actually run
     apt-get reinstall --no-install-recommends -y -qq `echo -n "$lostpkglist"` >/dev/null 2>&1
@@ -2079,6 +2079,11 @@ EOF
   if [[ $tmpTARGET == *"cosfs"* ]]; then
     cat <<EOF >>$LXC_CONFIG
 nameserver: 183.60.83.19,183.60.82.98
+lxc.mount.entry: /dev/fuse dev/fuse none bind,create=file 0 0
+EOF
+  fi
+  if [[ $tmpTARGET == kasm ]]; then
+    cat <<EOF >>$LXC_CONFIG
 lxc.mount.entry: /dev/fuse dev/fuse none bind,create=file 0 0
 EOF
   fi

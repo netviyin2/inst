@@ -16,7 +16,7 @@ silent apt-get install -y \
 echo "Installed Dependencies"
 
 silent apt-get install -y debhelper apt-utils dctrl-tools
-silent apt-get install -y xsltproc docbook-xsl bogl-utils genext2fs genisoimage dosfstools bc syslinux syslinux-utils isolinux pxelinux syslinux-common shim-signed grub-efi-amd64-signed xorriso tofrodos mtools unifont-bin pigz depthcharge-tools win32-loader librsvg2-bin
+silent apt-get install -y xsltproc docbook-xsl genext2fs genisoimage dosfstools bc syslinux syslinux-utils isolinux pxelinux syslinux-common shim-signed grub-efi-amd64-signed xorriso tofrodos mtools unifont-bin pigz win32-loader librsvg2-bin # bogl-utils depthcharge-tools
 silent apt-get install -y qemu-system
 
 cd /root
