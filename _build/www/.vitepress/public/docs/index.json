@@ -185,6 +185,12 @@
           "icon": "📄"
         },
         {
+          "id": "instnews-swtichtodebian11",
+          "slug": "swtichtodebian11",
+          "title": "inst基础大版本升级到debian11",
+          "icon": "📄"
+        },
+        {
           "id": "instnews-vzpve",
           "slug": "vzpve",
           "title": "将openvz容器一键转化为pve",
@@ -228,7 +234,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-14"
+      "lastUpdated": "2026-09-15"
     },
     {
       "id": "instnews-cleanuipve",
@@ -429,6 +435,17 @@
       "lastUpdated": "2025-05-23"
     },
     {
+      "id": "instnews-swtichtodebian11",
+      "slug": "swtichtodebian11",
+      "title": "inst基础大版本升级到debian11",
+      "icon": "📄",
+      "desc": "",
+      "tags": [
+        "文档"
+      ],
+      "lastUpdated": "2024-01-30"
+    },
+    {
       "id": "instnews-vzpve",
       "slug": "vzpve",
       "title": "将openvz容器一键转化为pve",
@@ -481,7 +498,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-14"
+      "lastUpdated": "2026-09-15"
     },
     {
       "id": "instrepos-bin456789",
@@ -492,7 +509,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-14"
+      "lastUpdated": "2026-09-15"
     },
     {
       "id": "instrepos-linuxlive",
@@ -503,7 +520,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-14"
+      "lastUpdated": "2026-09-15"
     },
     {
       "id": "instrepos-natee",
@@ -514,7 +531,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-14"
+      "lastUpdated": "2026-09-15"
     },
     {
       "id": "instrepos-osxdmgs",
@@ -525,7 +542,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-14"
+      "lastUpdated": "2026-09-15"
     },
     {
       "id": "instrepos-teddysun",
@@ -536,7 +553,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-14"
+      "lastUpdated": "2026-09-15"
     },
     {
       "id": "instrepos-wikihost",
@@ -547,7 +564,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-14"
+      "lastUpdated": "2026-09-15"
     },
     {
       "id": "instrepos-windowsisos",
@@ -558,7 +575,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-14"
+      "lastUpdated": "2026-09-15"
     }
   ],
   "docs": {
@@ -571,7 +588,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-14",
+      "lastUpdated": "2026-09-15",
       "category": "instintro"
     },
     "instnews-cleanuipve": {
@@ -790,6 +807,18 @@
       "lastUpdated": "2025-05-23",
       "category": "instnews"
     },
+    "instnews-swtichtodebian11": {
+      "id": "instnews-swtichtodebian11",
+      "slug": "swtichtodebian11",
+      "title": "inst基础大版本升级到debian11",
+      "subtitle": "",
+      "icon": "📄",
+      "tags": [
+        "文档"
+      ],
+      "lastUpdated": "2024-01-30",
+      "category": "instnews"
+    },
     "instnews-vzpve": {
       "id": "instnews-vzpve",
       "slug": "vzpve",
@@ -847,7 +876,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-14",
+      "lastUpdated": "2026-09-15",
       "category": "instrepos"
     },
     "instrepos-bin456789": {
@@ -859,7 +888,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-14",
+      "lastUpdated": "2026-09-15",
       "category": "instrepos"
     },
     "instrepos-linuxlive": {
@@ -871,7 +900,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-14",
+      "lastUpdated": "2026-09-15",
       "category": "instrepos"
     },
     "instrepos-natee": {
@@ -883,7 +912,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-14",
+      "lastUpdated": "2026-09-15",
       "category": "instrepos"
     },
     "instrepos-osxdmgs": {
@@ -895,7 +924,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-14",
+      "lastUpdated": "2026-09-15",
       "category": "instrepos"
     },
     "instrepos-teddysun": {
@@ -907,7 +936,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-14",
+      "lastUpdated": "2026-09-15",
       "category": "instrepos"
     },
     "instrepos-wikihost": {
@@ -919,7 +948,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-14",
+      "lastUpdated": "2026-09-15",
       "category": "instrepos"
     },
     "instrepos-windowsisos": {
@@ -931,7 +960,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-14",
+      "lastUpdated": "2026-09-15",
       "category": "instrepos"
     }
   }

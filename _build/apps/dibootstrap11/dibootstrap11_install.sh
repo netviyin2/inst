@@ -3,11 +3,11 @@
 silent() { "$@" >/dev/null 2>&1 || { echo "Error running: $*"; echo "sth error"; exit 1; }; }
 
 
-debmirror=${1:-http://archive.debian.org/debian}
-echo -e "deb ${debmirror} bullseye main\ndeb ${debmirror} bullseye-updates main" > /etc/apt/sources.list # \ndeb ${debmirror}-security bullseye-security main
+debmirror=http://snapshot.debian.org/archive/debian/20231007T024024Z
+echo -e "deb ${debmirror} bullseye main\ndeb ${debmirror} bullseye-updates main\ndeb ${debmirror/debian\//debian-security\/} bullseye-security main" > /etc/apt/sources.list
 
 echo "Installing Dependencies"
-silent apt-get update -y
+silent apt-get update -o Acquire::Check-Valid-Until=false -y
 silent apt-get install -y \
   curl \
   sudo \
@@ -15,6 +15,7 @@ silent apt-get install -y \
   gpg
 echo "Installed Dependencies"
 
+silent apt-get install -y fakeroot # linux-image-5.10.0-22-amd64
 silent apt-get install -y debhelper apt-utils dctrl-tools
 silent apt-get install -y xsltproc docbook-xsl libbogl-dev genext2fs genisoimage dosfstools bc syslinux syslinux-utils isolinux pxelinux syslinux-common shim-signed grub-efi-amd64-signed xorriso tofrodos mtools bf-utf-source win32-loader librsvg2-bin e2fsprogs fdisk
 silent apt-get install -y qemu-system
@@ -32,9 +33,9 @@ rm -rf installer
 tar xzf download/debian-installer_20210731+deb11u8.tar.gz
 
 touch installer/build/sources.list.udeb.local
-echo 'deb https://snapshot.debian.org/archive/debian/20231007T024024Z bullseye main/debian-installer' > installer/build/sources.list.udeb.local
-echo 'deb https://snapshot.debian.org/archive/debian/20231007T024024Z bullseye-updates main/debian-installer' >> installer/build/sources.list.udeb.local
-echo 'deb https://snapshot.debian.org/archive/debian-security/20231007T024024Z bullseye-security main/debian-installer' >> installer/build/sources.list.udeb.local
+echo 'deb http://snapshot.debian.org/archive/debian/20231007T024024Z bullseye main/debian-installer' > installer/build/sources.list.udeb.local
+echo 'deb http://snapshot.debian.org/archive/debian/20231007T024024Z bullseye-updates main/debian-installer' >> installer/build/sources.list.udeb.local
+echo 'deb http://snapshot.debian.org/archive/debian-security/20231007T024024Z bullseye-security main/debian-installer' >> installer/build/sources.list.udeb.local
 sed -i '/cat > "$APT_CONFIG" <<EOF/a\Acquire::Check-Valid-Until "false";' installer/build/util/get-packages
 
 read start end < <(awk '/^# Get a list of all kernel modules matching the kernel version\./ {s=NR} s && /^\.PHONY: pkg-lists\/kernel-module-udebs$/ {e=NR; print s, e; exit}' installer/build/Makefile)

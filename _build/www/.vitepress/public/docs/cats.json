@@ -185,6 +185,12 @@
           "icon": "📄"
         },
         {
+          "id": "instnews-swtichtodebian11",
+          "slug": "swtichtodebian11",
+          "title": "inst基础大版本升级到debian11",
+          "icon": "📄"
+        },
+        {
           "id": "instnews-vzpve",
           "slug": "vzpve",
           "title": "将openvz容器一键转化为pve",

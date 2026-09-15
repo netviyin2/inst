@@ -8,7 +8,7 @@
     "文档"
   ],
   "category": "instintro",
-  "lastUpdated": "2026-09-14",
+  "lastUpdated": "2026-09-15",
   "sections": [
     {
       "type": "text",
@@ -22,14 +22,14 @@
     {
       "type": "ul",
       "items": [
-        "作为核心provision引擎部分，基于增强的debianinstaller和嵌入的pve lxc环境,inst.sh可一键为你的日常os和devdesk提供新系统生成/重装支持。 ",
+        "作为核心provision引擎部分，基于增强的debianinstaller和嵌入的pve lxc环境,inst.sh可一键为你的日常os和devdesk提供正反向新系统生成/重装支持。 ",
         "作为前端增强部分，安装后的系统尽量搭配使用kasmvnc实现开箱即用。    ",
         "作为脚本应用和自定义app商店部分，inst.sh可以为这些系统安装各种常见应用和隔离开发环境。  "
       ]
     },
     {
       "type": "quote",
-      "content": "inst也是一整套完整的自建实验和编程教学方案：比如它源码开放且raw风格书写，且尽量不引用外部资源，抽象适中,扩展丰富，适合自建和用户定制,etc .."
+      "content": "inst也是一整套完整的linux自建实验和编程教学方案：比如它源码开放且raw风格书写，且尽量不引用外部资源，抽象适中,扩展丰富，适合自建和用户定制,etc .."
     },
     {
       "type": "text",
@@ -48,7 +48,7 @@
     {
       "type": "text",
       "content": [
-        "inst支持一键dd其它多种os和为这些os(目前仅debian)注入多种应用，配合这些应用，可以将这些os做成路由器，做成programmable nas，，做成sidebar os, 做成青龙，做成allinone,做成btpanel,,做成安卓群控,做成devops,做成serverless cli",
+        "inst支持一键dd其它多种os和为这些os(目前仅debian和devdesk)注入多种应用，配合这些应用，可以将这些os做成路由器，做成programmable nas，，做成sidebar os, 做成青龙，做成allinone,做成btpanel,,做成安卓群控,做成devops,做成serverless cli",
         "inst支持扩展，支持定制接入无限增加的机型和系统，以及应用，应用和注入应用方法，具体见下面的用法说明："
       ]
     },
@@ -89,7 +89,7 @@
     },
     {
       "type": "quote",
-      "content": "恢复完成后的系统，``<code>一般地，使用iso安装或源安装的linux/windows其root/administrator密码都是inst.sh，iso包安装的桌面linu会多增加一个用户名为user密码为inst.sh的用户,使用自带密码的dd包(比如gz/xz/qcow2)安装的linux/windows会保留原包密码</code>``，也可指定密码安装，指定密码的时候：注意windows指定时密码小于6位或8位可能不符合要求会导致密码无效   "
+      "content": "恢复完成后的系统，``<code>一般地，使用iso安装或源安装的linux/windows其root/administrator密码都是inst.sh，iso包安装的桌面linu会多增加一个用户名为user密码为inst.sh的用户,使用自带密码的dd包(比如gz/xz/qcow2)安装的linux/windows会保留原包密码</code>``，也可指定密码安装，指定密码的时候：注意windows指定时密码小于6位或8位可能不符合要求会导致密码无效    pve安装完端口是8000不是8006,本人不持有不保留对pve相关的增强和修改方面的任何授权，一切归官方即商标注册权方所有。    "
     },
     {
       "type": "text",

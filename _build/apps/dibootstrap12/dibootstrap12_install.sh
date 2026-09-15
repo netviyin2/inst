@@ -3,11 +3,11 @@
 silent() { "$@" >/dev/null 2>&1 || { echo "Error running: $*"; echo "sth error"; exit 1; }; }
 
 
-debmirror=${1:-http://archive.debian.org/debian}
-echo -e "deb ${debmirror} bullseye main\ndeb ${debmirror} bullseye-updates main" > /etc/apt/sources.list # \ndeb ${debmirror}-security bullseye-security main
+debmirror=http://snapshot.debian.org/archive/debian/20250426T000000Z
+echo -e "deb ${debmirror} bookworm main\ndeb ${debmirror} bookworm-updates main\ndeb ${debmirror/debian\//debian-security\/} bookworm-security main" > /etc/apt/sources.list
 
 echo "Installing Dependencies"
-silent apt-get update -y
+silent apt-get update -o Acquire::Check-Valid-Until=false -y
 silent apt-get install -y \
   curl \
   sudo \
@@ -15,8 +15,9 @@ silent apt-get install -y \
   gpg
 echo "Installed Dependencies"
 
+silent apt-get install -y fakeroot linux-image-6.1.0-32-amd64
 silent apt-get install -y debhelper apt-utils dctrl-tools
-silent apt-get install -y xsltproc docbook-xsl genext2fs genisoimage dosfstools bc syslinux syslinux-utils isolinux pxelinux syslinux-common shim-signed grub-efi-amd64-signed xorriso tofrodos mtools unifont-bin pigz win32-loader librsvg2-bin # bogl-utils depthcharge-tools
+silent apt-get install -y xsltproc docbook-xml docbook-xsl bogl-utils genext2fs genisoimage dosfstools bc syslinux syslinux-utils isolinux pxelinux syslinux-common shim-signed grub-efi-amd64-signed xorriso tofrodos mtools unifont unifont-bin pigz depthcharge-tools win32-loader librsvg2-bin
 silent apt-get install -y qemu-system
 
 cd /root
@@ -32,9 +33,9 @@ rm -rf installer
 tar xJf download/debian-installer_20230607+deb12u10.tar.xz
 
 touch installer/build/sources.list.udeb.local
-echo 'deb https://snapshot.debian.org/archive/debian/20250426T000000Z bookworm main/debian-installer' > installer/build/sources.list.udeb.local
-echo 'deb https://snapshot.debian.org/archive/debian/20250426T000000Z bookworm-updates main/debian-installer' >> installer/build/sources.list.udeb.local
-echo 'deb https://snapshot.debian.org/archive/debian-security/20250426T000000Z bookworm-security main/debian-installer' >> installer/build/sources.list.udeb.local
+echo 'deb http://snapshot.debian.org/archive/debian/20250426T000000Z bookworm main/debian-installer' > installer/build/sources.list.udeb.local
+echo 'deb http://snapshot.debian.org/archive/debian/20250426T000000Z bookworm-updates main/debian-installer' >> installer/build/sources.list.udeb.local
+echo 'deb http://snapshot.debian.org/archive/debian-security/20250426T000000Z bookworm-security main/debian-installer' >> installer/build/sources.list.udeb.local
 sed -i '/cat > "$APT_CONFIG" <<EOF/a\Acquire::Check-Valid-Until "false";' installer/build/util/get-packages
 
 read start end < <(awk '/^# Get a list of all kernel modules matching the kernel version\./ {s=NR} s && /^\.PHONY: pkg-lists\/kernel-module-udebs$/ {e=NR; print s, e; exit}' installer/build/Makefile)
