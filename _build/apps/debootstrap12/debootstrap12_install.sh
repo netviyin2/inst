@@ -291,8 +291,8 @@ mkdir -p $rootfsDir
 
 # debootstrap first-stage (downloading debs phase) dont support multiplesuits/multipcomponets (just singlemainsuit/multipcomponets)
 # but we can divide debootstrap to two explict steps, and apply full-mirror fix and chroot apt-get upgrade after second_stage
-repo_url="https://snapshot.debian.org/archive/debian/20250426T000000Z"
-sec_repo_url="https://snapshot.debian.org/archive/debian-security/20250426T000000Z"
+repo_url="https://snapshot.debian.org/archive/debian/20250425T203925Z"
+sec_repo_url="https://snapshot.debian.org/archive/debian-security/20250425T203925Z"
 
 echo "Building base in $rootfsDir"
 DEBOOTSTRAP_DIR="$DEBOOTSTRAP_DIR" debootstrap "${debootstrap_arch_args[@]}"  --keyring "$KEYRING" --variant container --foreign "${DIST}" "$rootfsDir" "$repo_url"

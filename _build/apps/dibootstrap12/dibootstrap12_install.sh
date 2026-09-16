@@ -3,7 +3,7 @@
 silent() { "$@" >/dev/null 2>&1 || { echo "Error running: $*"; echo "sth error"; exit 1; }; }
 
 
-debmirror=http://snapshot.debian.org/archive/debian/20250426T000000Z
+debmirror=http://snapshot.debian.org/archive/debian/20250425T203925Z
 echo -e "deb ${debmirror} bookworm main\ndeb ${debmirror} bookworm-updates main\ndeb ${debmirror/debian\//debian-security\/} bookworm-security main" > /etc/apt/sources.list
 
 echo "Installing Dependencies"
@@ -15,13 +15,15 @@ silent apt-get install -y \
   gpg
 echo "Installed Dependencies"
 
-silent apt-get install -y fakeroot linux-image-6.1.0-32-amd64
+silent apt-get install -y fakeroot
 silent apt-get install -y debhelper apt-utils dctrl-tools
 silent apt-get install -y xsltproc docbook-xml docbook-xsl bogl-utils genext2fs genisoimage dosfstools bc syslinux syslinux-utils isolinux pxelinux syslinux-common shim-signed grub-efi-amd64-signed xorriso tofrodos mtools unifont unifont-bin pigz depthcharge-tools win32-loader librsvg2-bin
 silent apt-get install -y qemu-system
 
 cd /root
-mkdir -p download
+mkdir -p download extracted
+silent wget -q https://snapshot.debian.org/archive/debian/20250425T203925Z/pool/main/l/linux/linux-image-6.1.0-32-amd64-unsigned_6.1.129-1_amd64.deb -O download/linux-image-6.1.0-32-amd64-unsigned_6.1.129-1_amd64.deb
+silent dpkg -x download/linux-image-6.1.0-32-amd64-unsigned_6.1.129-1_amd64.deb extracted/
 wget --no-check-certificate http://ftp.debian.org/debian/pool/main/d/debian-installer/debian-installer_20230607+deb12u10.tar.xz -O download/debian-installer_20230607+deb12u10.tar.xz
 
 cat > /root/start.sh << 'EOL'
@@ -33,10 +35,13 @@ rm -rf installer
 tar xJf download/debian-installer_20230607+deb12u10.tar.xz
 
 touch installer/build/sources.list.udeb.local
-echo 'deb http://snapshot.debian.org/archive/debian/20250426T000000Z bookworm main/debian-installer' > installer/build/sources.list.udeb.local
-echo 'deb http://snapshot.debian.org/archive/debian/20250426T000000Z bookworm-updates main/debian-installer' >> installer/build/sources.list.udeb.local
-echo 'deb http://snapshot.debian.org/archive/debian-security/20250426T000000Z bookworm-security main/debian-installer' >> installer/build/sources.list.udeb.local
+echo 'deb http://snapshot.debian.org/archive/debian/20250425T203925Z bookworm main/debian-installer' > installer/build/sources.list.udeb.local
+echo 'deb http://snapshot.debian.org/archive/debian/20250425T203925Z bookworm-updates main/debian-installer' >> installer/build/sources.list.udeb.local
+echo 'deb http://snapshot.debian.org/archive/debian-security/20250425T203925Z bookworm-security main/debian-installer' >> installer/build/sources.list.udeb.local
 sed -i '/cat > "$APT_CONFIG" <<EOF/a\Acquire::Check-Valid-Until "false";' installer/build/util/get-packages
+sed -i 's/linux-image-6\.1\.0-32-amd64 \[amd64\]//' installer/debian/control
+sed -i 's@export DRM_DIR := /lib/modules/\$(KERNELVERSION)/kernel/drivers/gpu/drm@export DRM_DIR := ../../extracted/lib/modules/\$(KERNELVERSION)/kernel/drivers/gpu/drm@' installer/build/Makefile
+sed -i 's@\$(TREE)\$(DRM_DIR)@\$(TREE)/lib/modules/\$(KERNELVERSION)/kernel/drivers/gpu/drm@g' installer/build/Makefile
 
 read start end < <(awk '/^# Get a list of all kernel modules matching the kernel version\./ {s=NR} s && /^\.PHONY: pkg-lists\/kernel-module-udebs$/ {e=NR; print s, e; exit}' installer/build/Makefile)
 sed -i "${end}a\\
@@ -64,7 +69,7 @@ chmod +x /root/start.sh
 cat > /root/test.sh << 'EOL'
 cd /root
 
-qemu-system-x86_64 -boot d -cdrom installer/build/dest/netboot/mini.iso
+qemu-system-x86_64 -boot d -cdrom installer/build/dest/netboot/mini.iso -nographic
 EOL
 chmod +x /root/test.sh
 

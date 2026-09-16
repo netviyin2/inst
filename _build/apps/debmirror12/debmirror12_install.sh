@@ -18,17 +18,17 @@ cat > /root/sync_full.sh << 'EOL'
 
 host="snapshot.debian.org"
 distroots=(
-    "bookworm,bookworm-updates,bookworm-backports::archive/debian/20250426T000000Z"
-    "bookworm-security::archive/debian-security/20250426T000000Z"
+    "bookworm,bookworm-updates,bookworm-backports::archive/debian/20250425T203925Z"
+    "bookworm-security::archive/debian-security/20250425T203925Z"
 )
 arch="amd64,arm64"
 section="main,contrib,non-free,main/debian-installer"
 
 cd /root
-rm -rf 20250426T000000Z
-mkdir -p 20250426T000000Z
+rm -rf 20250425T203925Z
+mkdir -p 20250425T203925Z
 
-echo "Syncing snapshot date: 20250426T000000Z"
+echo "Syncing snapshot date: 20250425T203925Z"
 # nocleanup is important for a full sync
 for distroot in "${distroots[@]}"; do
     IFS='::' read -r dist root <<< "$distroot"
@@ -43,9 +43,9 @@ for distroot in "${distroots[@]}"; do
         --no-check-gpg \
         --progress \
         --nocleanup \
-        20250426T000000Z
+        20250425T203925Z
 done
-echo "Sync completed for snapshot date: 20250426T000000Z"
+echo "Sync completed for snapshot date: 20250425T203925Z"
 
 EOL
 chmod +x /root/sync_full.sh
@@ -54,17 +54,17 @@ cat > /root/sync_mini.sh << 'EOL'
 
 host="snapshot.debian.org"
 distroots=(
-    "bookworm,bookworm-updates::archive/debian/20250426T000000Z"
-    "bookworm-security::archive/debian-security/20250426T000000Z"
+    "bookworm,bookworm-updates::archive/debian/20250425T203925Z"
+    "bookworm-security::archive/debian-security/20250425T203925Z"
 )
 arch="amd64,arm64"
 section="main,main/debian-installer"
 
 cd /root
-rm -rf 20250426T000000Z
-mkdir -p 20250426T000000Z
+rm -rf 20250425T203925Z
+mkdir -p 20250425T203925Z
 
-echo "Syncing snapshot date: 20250426T000000Z"
+echo "Syncing snapshot date: 20250425T203925Z"
 # nocleanup is important for a full sync
 for distroot in "${distroots[@]}"; do
     IFS='::' read -r dist root <<< "$distroot"
@@ -79,9 +79,9 @@ for distroot in "${distroots[@]}"; do
         --no-check-gpg \
         --progress \
         --nocleanup \
-        20250426T000000Z
+        20250425T203925Z
 done
-echo "Sync completed for snapshot date: 20250426T000000Z"
+echo "Sync completed for snapshot date: 20250425T203925Z"
 
 EOL
 chmod +x /root/sync_mini.sh
@@ -90,17 +90,17 @@ cat > /root/sync_base_amd64_tar.sh << 'EOL'
 
 host="snapshot.debian.org"
 distroots=(
-    "bookworm,bookworm-updates::archive/debian/20250426T000000Z"
-    "bookworm-security::archive/debian-security/20250426T000000Z"
+    "bookworm,bookworm-updates::archive/debian/20250425T203925Z"
+    "bookworm-security::archive/debian-security/20250425T203925Z"
 )
 arch="amd64"
 section="main,main/debian-installer"
 
 cd /root
-rm -rf 20250426T000000Z
-mkdir -p 20250426T000000Z
+rm -rf 20250425T203925Z
+mkdir -p 20250425T203925Z
 
-echo "Syncing snapshot date: 20250426T000000Z"
+echo "Syncing snapshot date: 20250425T203925Z"
 # nocleanup is important for a full sync
 for distroot in "${distroots[@]}"; do
     IFS='::' read -r dist root <<< "$distroot"
@@ -115,12 +115,12 @@ for distroot in "${distroots[@]}"; do
         --no-check-gpg \
         --progress \
         --nocleanup \
-        20250426T000000Z
+        20250425T203925Z
 done
-echo "Sync completed for snapshot date: 20250426T000000Z"
+echo "Sync completed for snapshot date: 20250425T203925Z"
 
-tar --exclude='.temp' --remove-files -cvf 20250426T000000Z.tar 20250426T000000Z
-find 20250426T000000Z -type d -empty -delete
+tar --exclude='.temp' --remove-files -cvf 20250425T203925Z.tar 20250425T203925Z
+find 20250425T203925Z -type d -empty -delete
 
 EOL
 chmod +x /root/sync_base_amd64_tar.sh
@@ -129,17 +129,17 @@ cat > /root/sync_base_arm64_tar.sh << 'EOL'
 
 host="snapshot.debian.org"
 distroots=(
-    "bookworm,bookworm-updates::archive/debian/20250426T000000Z"
-    "bookworm-security::archive/debian-security/20250426T000000Z"
+    "bookworm,bookworm-updates::archive/debian/20250425T203925Z"
+    "bookworm-security::archive/debian-security/20250425T203925Z"
 )
 arch="arm64"
 section="main,main/debian-installer"
 
 cd /root
-rm -rf 20250426T000000Z
-mkdir -p 20250426T000000Z
+rm -rf 20250425T203925Z
+mkdir -p 20250425T203925Z
 
-echo "Syncing snapshot date: 20250426T000000Z"
+echo "Syncing snapshot date: 20250425T203925Z"
 # nocleanup is important for a full sync
 for distroot in "${distroots[@]}"; do
     IFS='::' read -r dist root <<< "$distroot"
@@ -154,12 +154,12 @@ for distroot in "${distroots[@]}"; do
         --no-check-gpg \
         --progress \
         --nocleanup \
-        20250426T000000Z
+        20250425T203925Z
 done
-echo "Sync completed for snapshot date: 20250426T000000Z"
+echo "Sync completed for snapshot date: 20250425T203925Z"
 
-tar --exclude='.temp' --remove-files -cvf 20250426T000000Z.tar 20250426T000000Z
-find 20250426T000000Z -type d -empty -delete
+tar --exclude='.temp' --remove-files -cvf 20250425T203925Z.tar 20250425T203925Z
+find 20250425T203925Z -type d -empty -delete
 
 EOL
 chmod +x /root/sync_base_arm64_tar.sh

@@ -8,11 +8,11 @@
     "文档"
   ],
   "category": "instnews",
-  "lastUpdated": "2024-01-30",
+  "lastUpdated": "2023-10-07",
   "sections": [
     {
       "type": "text",
-      "content": "debian10将于今年年中结束支持，inst.sh的基础di和pve已升级到debian11",
+      "content": "inst.sh的基础di和pve已升级到debian11",
       "title": ""
     },
     {

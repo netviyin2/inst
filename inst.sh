@@ -2543,8 +2543,9 @@ case $tmpTARGET in
     DEBVER=`echo "$tmpTARGET" | grep -oP '(?<=debian)\d+' || echo 11`
     if [[ ! "$DEBVER" =~ ^[0-9]+$ || "$DEBVER" -gt 12 || "$DEBVER" -lt 10 ]]; then echo "bad debver" && exit; fi
     TARGETDDURL=$(
-      [[ "$DEBVER" == '10' ]] && echo "https://snapshot.debian.org/archive/debian/20240629T000000Z" || \
-      [[ "$DEBVER" == '11' ]] && echo "https://archive.debian.org/debian" ||  echo "$DEBMIRROR"
+      [[ "$DEBVER" == '10' ]] && echo "https://snapshot.debian.org/archive/debian/20210310T204609Z" || \
+      [[ "$DEBVER" == '11' ]] && echo "https://snapshot.debian.org/archive/debian/20231007T024024Z" || \
+      [[ "$DEBVER" == '12' ]] && echo "https://snapshot.debian.org/archive/debian/20250425T203925Z" || echo "$DEBMIRROR"
     ) ;;
   devdeskos*) [[ "$REPOMIRROR" =~ "/raw/master" ]] && { ifgap="${REPOMIRROR#*inst}";ifgap="${ifgap%raw\/master*}";ifgap="${ifgap//\//}";[[ -z "$ifgap" ]] && IMGMIRROR=${REPOMIRROR/\/inst\/raw\/master/}"/xxxxxx/raw/master" || IMGMIRROR=${REPOMIRROR/\/inst\/$ifgap\/raw\/master/}"/xxxxxx/$ifgap/raw/master"; } || IMGMIRROR=${REPOMIRROR/\/inst/}"/xxxxxx";TARGETDDURL=${IMGMIRROR/xxxxxx/1kdd}"/_build/devdeskos/binary$([ "$tmpHOSTARCH" == '1' -a "$tmpHOSTARCH" != '' ]  && echo -n -arm64 || echo -n -amd64)/tarball"
     CheckTargeturl $TARGETDDURL"/onekeydevdeskd-01core$([ "$tmpHOSTARCH" == '1' -a "$tmpHOSTARCH" != '' ]  && echo _arm64).xz_000.chunk" ;;
