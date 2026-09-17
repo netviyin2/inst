@@ -3,11 +3,11 @@
 silent() { "$@" >/dev/null 2>&1 || { echo "Error running: $*"; echo "sth error"; exit 1; }; }
 
 
-debmirror=${1:-http://archive.debian.org/debian}
-echo -e "deb ${debmirror} bullseye main\ndeb ${debmirror} bullseye-updates main" > /etc/apt/sources.list # \ndeb ${debmirror}-security bullseye-security main
+debmirror=http://snapshot.debian.org/archive/debian/20250425T203925Z
+echo -e "deb ${debmirror} bookworm main\ndeb ${debmirror} bookworm-updates main\ndeb ${debmirror/debian\//debian-security\/} bookworm-security main" > /etc/apt/sources.list
 
 echo "Installing Dependencies"
-silent apt-get update -y
+silent apt-get update -o Acquire::Check-Valid-Until=false -y
 silent apt-get install -y curl sudo mc
 echo "Installed Dependencies"
 
