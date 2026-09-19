@@ -4,8 +4,8 @@
   "name": "android",
   "type": "script",
   "description": "android",
-  "date_created": "2026-09-17",
-  "lastUpdated": "2026-09-17",
+  "date_created": "2026-09-19",
+  "lastUpdated": "2026-09-19",
   "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
   "category": "osapps",
   "categories": [

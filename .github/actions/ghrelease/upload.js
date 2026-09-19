@@ -52,6 +52,8 @@ async function deleteAsset(assetId, name) {
     asset_id: assetId,
   });
   console.log(`Deleted existing asset: ${name}`);
+  // 关键：删除后等待，给github后端完成清理，解决竞态500
+  await new Promise(resolve => setTimeout(resolve, 3000));
 }
 
 async function uploadAssetsToRelease(release, localDir) {
