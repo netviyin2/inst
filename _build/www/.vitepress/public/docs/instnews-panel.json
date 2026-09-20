@@ -80,7 +80,7 @@
       "type": "text",
       "content": [
         "仓库：",
-        "https://inst.sh\nhttps://github.com/minlearn/inst.git  \nhttps://github.com/minlearn/inst-cf.git  \nreadme.md自解释，足够简单，你直接看就明白了。  \n自己用accesspoint保护起来，不保护也没关系。",
+        "https://inst.sh\nhttps://github.com/minlearn/inst.git  \n源码在_build/www/panel下  \nwrangler.toml自解释，足够简单，你直接看就明白了。  \n自己用accesspoint保护起来，不保护也没关系。",
         "视频：",
         "无"
       ]
