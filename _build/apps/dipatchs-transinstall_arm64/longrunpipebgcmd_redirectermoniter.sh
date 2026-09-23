@@ -78,7 +78,7 @@ dowget(){
     wget -q --no-check-certificate "$RLSMIRROR/$i" -O p4/down/$i
   done
 
-  wget -qO- --no-check-certificate "$TARGETDDURL" | stdbuf -oL dd of=p4/down/tmp.iso bs=10M 2>> /var/log/progress & pid=`expr $! + 0`;echo $pid
+  curl -sSL -k "$TARGETDDURL" | stdbuf -oL dd of=p4/down/tmp.iso bs=10M 2>> /var/log/progress & pid=`expr $! + 0`;echo $pid
 
 }
 

@@ -32,6 +32,7 @@ silent() { "$@" >/dev/null 2>&1 || { echo "Error running: $*"; echo "sth error";
 cd /root
 
 rm -rf installer
+# this script use a "static"(no preinstall/postinstall/triggers) debootstrap way of building the installer rootfs
 tar xJf download/debian-installer_20230607+deb12u10.tar.xz
 
 touch installer/build/sources.list.udeb.local

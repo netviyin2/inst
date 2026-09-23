@@ -234,7 +234,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-19"
+      "lastUpdated": "2026-09-23"
     },
     {
       "id": "instnews-cleanuipve",
@@ -498,7 +498,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-19"
+      "lastUpdated": "2026-09-23"
     },
     {
       "id": "instrepos-bin456789",
@@ -509,7 +509,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-19"
+      "lastUpdated": "2026-09-23"
     },
     {
       "id": "instrepos-linuxlive",
@@ -520,7 +520,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-19"
+      "lastUpdated": "2026-09-23"
     },
     {
       "id": "instrepos-natee",
@@ -531,7 +531,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-19"
+      "lastUpdated": "2026-09-23"
     },
     {
       "id": "instrepos-osxdmgs",
@@ -542,7 +542,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-19"
+      "lastUpdated": "2026-09-23"
     },
     {
       "id": "instrepos-teddysun",
@@ -553,7 +553,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-19"
+      "lastUpdated": "2026-09-23"
     },
     {
       "id": "instrepos-wikihost",
@@ -564,7 +564,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-19"
+      "lastUpdated": "2026-09-23"
     },
     {
       "id": "instrepos-windowsisos",
@@ -575,7 +575,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-19"
+      "lastUpdated": "2026-09-23"
     }
   ],
   "docs": {
@@ -588,7 +588,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-19",
+      "lastUpdated": "2026-09-23",
       "category": "instintro"
     },
     "instnews-cleanuipve": {
@@ -876,7 +876,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-19",
+      "lastUpdated": "2026-09-23",
       "category": "instrepos"
     },
     "instrepos-bin456789": {
@@ -888,7 +888,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-19",
+      "lastUpdated": "2026-09-23",
       "category": "instrepos"
     },
     "instrepos-linuxlive": {
@@ -900,7 +900,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-19",
+      "lastUpdated": "2026-09-23",
       "category": "instrepos"
     },
     "instrepos-natee": {
@@ -912,7 +912,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-19",
+      "lastUpdated": "2026-09-23",
       "category": "instrepos"
     },
     "instrepos-osxdmgs": {
@@ -924,7 +924,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-19",
+      "lastUpdated": "2026-09-23",
       "category": "instrepos"
     },
     "instrepos-teddysun": {
@@ -936,7 +936,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-19",
+      "lastUpdated": "2026-09-23",
       "category": "instrepos"
     },
     "instrepos-wikihost": {
@@ -948,7 +948,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-19",
+      "lastUpdated": "2026-09-23",
       "category": "instrepos"
     },
     "instrepos-windowsisos": {
@@ -960,7 +960,7 @@
       "tags": [
         "文档"
       ],
-      "lastUpdated": "2026-09-19",
+      "lastUpdated": "2026-09-23",
       "category": "instrepos"
     }
   }
