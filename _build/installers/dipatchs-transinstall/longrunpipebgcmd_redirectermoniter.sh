@@ -160,6 +160,7 @@ dotrans(){
         # 进去后也会有gop和内存问题，用refind+aptiofix
         if [ "$targetoshintwinverinfo" = "w7" ]; then
         mkdir -p p4/tmpinstall/boot/win7nocsm
+        cp p4/tmpinstall/boot/refind/refind_x64.efi p4/tmpinstall/boot/win7nocsm/refind.original.efi
         wimlib-imagex extract p4/extracted/sources/install.wim 1 /Windows/Boot/EFI/bootmgfw.efi --to-stdout > p4/tmpinstall/boot/win7nocsm/bootmgfw.original.efi
         7z x p4/down/aptiofix_r27.zip -op4/tmpinstall/boot/win7nocsm
         mv p4/tmpinstall/boot/win7nocsm/AptioMemoryFix.efi p4/tmpinstall/boot/win7nocsm/aptiomemoryfix_x64.efi
@@ -302,36 +303,69 @@ WINPESHL
       cat > p4/tmpinstall/oem3/win7nocsm.bat <<'WIN7NOCSM'
 @echo off
 
+call :sleep 50000
 echo [INFO] START INIT >> C:\win7nocsm.log
 wpeinit >nul 2>&1
 echo [INFO] START SETUP >> C:\win7nocsm.log
 call :sleep 15000
-echo rescan | diskpart
-call :sleep 5000
-wpeutil CreatePageFile /path=D:\pagefile.sys /size=1024
-if errorlevel 1 echo [WARN] CreatePageFile failed >> C:\win7nocsm.log
+call :waitinst
+if defined INST (
+echo [INFO] INST=%INST% >> C:\win7nocsm.log
 call :sleep 10000
+wpeutil CreatePageFile /path=%INST%:\pagefile.sys /size=1024
+call :sleep 10000
+) else (
+echo [WARN] INST not found >> C:\win7nocsm.log
+)
 cd /d X:\sources
 X:\sources\setup.exe /noreboot
 echo [INFO] SETUP EXIT, RUN POST SCRIPT >> C:\win7nocsm.log
 call :sleep 15000
-set "ESP=Z"
-if not exist Z:\ (
-    (echo select disk 0&echo select partition 3&echo assign letter=Z&echo exit) | diskpart >nul 2>&1
-)
-call :sleep 5000
+call :waitesp
+if defined ESP (
+echo [INFO] ESP=%ESP% >> C:\win7nocsm.log
+call :sleep 10000
 if exist %ESP%:\EFI\Microsoft\Boot\bootmgfw.efi del /f /q %ESP%:\EFI\Microsoft\Boot\bootmgfw.efi
 if exist %ESP%:\EFI\Boot\bootx64.efi del /f /q %ESP%:\EFI\Boot\bootx64.efi
 if exist %ESP%:\EFI\win7nocsm\bootmgfw.original.efi copy /y %ESP%:\EFI\win7nocsm\bootmgfw.original.efi %ESP%:\EFI\Microsoft\Boot\bootmgfw.original.efi
-if exist %ESP%:\EFI\win7nocsm\refind.efi copy /y %ESP%:\EFI\win7nocsm\refind.efi %ESP%:\EFI\Boot\bootx64.efi
+if exist %ESP%:\EFI\win7nocsm\refind.original.efi copy /y %ESP%:\EFI\win7nocsm\refind.original.efi %ESP%:\EFI\Boot\bootx64.efi
 if exist %ESP%:\EFI\win7nocsm\aptiomemoryfix_x64.efi copy /y %ESP%:\EFI\win7nocsm\aptiomemoryfix_x64.efi %ESP%:\EFI\Boot\drivers_x64\aptiomemoryfix_x64.efi
-call :sleep 10000
 bcdedit /deletevalue {fwbootmgr} displayorder
-call :sleep 5000
+call :sleep 10000
 bcdedit /deletevalue {fwbootmgr} bootorder
+call :sleep 10000
+) else (
+echo [ERROR] ESP not found >> C:\win7nocsm.log
+cmd /k
+)
 echo [INFO] POST DONE, REBOOT >> C:\win7nocsm.log
 wpeutil reboot
 exit /b 0
+
+:waitinst
+echo rescan | diskpart
+call :sleep 5000
+set "INST="
+for %%d in (C D E F G H I J K L M N O P Q R S T U V W Y Z) do (
+    vol %%d: 2>nul | find /i "INST" >nul && if exist "%%d:\sources\setup.exe" set "INST=%%d"
+)
+call :sleep 5000
+exit /b
+
+:waitesp
+echo rescan | diskpart
+call :sleep 5000
+set "ESP="
+for /l %%i in (1,1,100) do (
+    if not defined ESP (
+        for %%e in (C D E F G H I J K L M N O P Q R S T U V W Y Z) do (
+            if not "%%e"=="%INST%" if exist "%%e:\EFI\Microsoft\Boot\bootmgfw.efi" set "ESP=%%e"
+        )
+        if not defined ESP call :sleep 3000
+    )
+)
+call :sleep 5000
+exit /b
 
 :sleep
 echo WScript.Sleep "%~1" > "X:\_sleep.vbs"
@@ -955,9 +989,6 @@ for step in down parted wgetrans grub; do
            cp -aR p3/EFI/refind/. p3/EFI/boot/
            mv p3/EFI/boot/refind_x64.efi p3/EFI/boot/bootx64.efi
            rm -rf p3/EFI/refind
-           if [ "$targetoshintwinverinfo" = "w7" ]; then
-           cp p3/EFI/boot/bootx64.efi p3/EFI/win7nocsm/refind.efi
-           fi
            }
            [ $targetoslayoutinfo = 'efiosx' ] && {
            cp -aR p3/EFI/OC/. p3/EFI/boot/
