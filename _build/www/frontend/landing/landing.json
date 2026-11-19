@@ -10,7 +10,7 @@
         "primary": true
       },
       {
-        "text": "更多文档",
+        "text": "查看详情",
         "link": "/docs/#/instintro-intro",
         "primary": false
       }
@@ -31,7 +31,7 @@
     {
       "icon": "🎨",
       "title": "多场景",
-      "details": "nativedi,wgetdd,liveuntar,nc restore,inplace dd"
+      "details": "源debian安装,镜像还原,nc备份恢复,本地dd"
     },
     {
       "icon": "🔍",

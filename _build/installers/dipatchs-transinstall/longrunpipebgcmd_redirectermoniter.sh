@@ -303,9 +303,8 @@ WINPESHL
       cat > p4/tmpinstall/oem3/win7nocsm.bat <<'WIN7NOCSM'
 @echo off
 
-call :sleep 50000
-echo [INFO] START INIT >> C:\win7nocsm.log
 wpeinit >nul 2>&1
+call :sleep 30000
 echo [INFO] START SETUP >> C:\win7nocsm.log
 call :sleep 15000
 call :waitinst

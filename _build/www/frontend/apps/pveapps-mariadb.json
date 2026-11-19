@@ -4,8 +4,8 @@
   "name": "mariadb",
   "type": "script",
   "description": "mariadb",
-  "date_created": "2026-11-18",
-  "lastUpdated": "2026-11-18",
+  "date_created": "2026-11-19",
+  "lastUpdated": "2026-11-19",
   "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
   "category": "pveapps",
   "categories": [

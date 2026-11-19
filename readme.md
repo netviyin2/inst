@@ -154,6 +154,6 @@ ERC20 (ETH/USDT): [0xe2c233b444eefe0080a308f26c6dc83e38b1bfe2](https://etherscan
 
 -----
 
-此项目关联 https://github.com/minlearn/ 下所有项目，主体为 https://github.com/minlearn/minlearnprogramming/ 和 https://github.com/minlearn/minlinux ，这是一套为配合我在《minlearnprogramming》最小编程/统一开发的想法的辅助项目: 即最简单实用的终身linux和多开方案。  
+此项目关联 https://github.com/minlearn/ 下所有项目，主体为 https://github.com/minlearn/minlearnprogramming/ 和 https://github.com/minlearn/minlearnlinux ，这是一套为配合我在《minlearnprogramming》最小编程/统一开发的想法的辅助项目: 即最简单实用的终身linux和实训选型方案。  
 本项目长期保存
 

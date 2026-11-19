@@ -8,7 +8,7 @@
     "文档"
   ],
   "category": "instintro",
-  "lastUpdated": "2026-11-18",
+  "lastUpdated": "2026-11-19",
   "sections": [
     {
       "type": "text",
@@ -377,7 +377,7 @@
     },
     {
       "type": "text",
-      "content": "此项目关联 https://github.com/minlearn/ 下所有项目，主体为 https://github.com/minlearn/minlearnprogramming/ 和 https://github.com/minlearn/minlinux ，这是一套为配合我在《minlearnprogramming》最小编程/统一开发的想法的辅助项目: 即最简单实用的终身linux和多开方案。  \n本项目长期保存"
+      "content": "此项目关联 https://github.com/minlearn/ 下所有项目，主体为 https://github.com/minlearn/minlearnprogramming/ 和 https://github.com/minlearn/minlearnlinux ，这是一套为配合我在《minlearnprogramming》最小编程/统一开发的想法的辅助项目: 即最简单实用的终身linux和实训选型方案。  \n本项目长期保存"
     }
   ]
 }
