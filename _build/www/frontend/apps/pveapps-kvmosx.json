@@ -4,8 +4,8 @@
   "name": "kvmosx",
   "type": "script",
   "description": "kvmosx",
-  "date_created": "2026-11-19",
-  "lastUpdated": "2026-11-19",
+  "date_created": "2026-11-21",
+  "lastUpdated": "2026-11-21",
   "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
   "category": "pveapps",
   "categories": [
